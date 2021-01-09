@@ -178,7 +178,7 @@ func (q *Queries) GetBookByID(ctx context.Context, bookID uuid.UUID) (Book, erro
 	return i, err
 }
 
-const getSeekPosition = `-- name: GetSeekPosition :exec
+const getSeekPosition = `-- name: GetSeekPosition :one
 SELECT seek_position from PLAYSTATE where user_id=$1 AND book_chapter=$2
 `
 
@@ -187,9 +187,11 @@ type GetSeekPositionParams struct {
 	BookChapter sql.NullString `json:"book_chapter"`
 }
 
-func (q *Queries) GetSeekPosition(ctx context.Context, arg GetSeekPositionParams) error {
-	_, err := q.exec(ctx, q.getSeekPositionStmt, getSeekPosition, arg.UserID, arg.BookChapter)
-	return err
+func (q *Queries) GetSeekPosition(ctx context.Context, arg GetSeekPositionParams) (sql.NullInt32, error) {
+	row := q.queryRow(ctx, q.getSeekPositionStmt, getSeekPosition, arg.UserID, arg.BookChapter)
+	var seek_position sql.NullInt32
+	err := row.Scan(&seek_position)
+	return seek_position, err
 }
 
 const updateSeekPosition = `-- name: UpdateSeekPosition :exec

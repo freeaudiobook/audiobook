@@ -1,4 +1,4 @@
--- name: GetSeekPosition :exec
+-- name: GetSeekPosition :one
 SELECT seek_position from PLAYSTATE where user_id=$1 AND book_chapter=$2;
 
 -- name: UpdateSeekPosition :exec
