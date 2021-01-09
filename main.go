@@ -2,6 +2,7 @@ package main
 
 import (
 	"database/sql"
+	"encoding/json"
 	"fmt"
 	"io/ioutil"
 	"log"
@@ -42,6 +43,16 @@ func createOrUpdateSeek(w http.ResponseWriter, r *http.Request) {
 
 var database *db.Queries
 
+func listAllBooks(w http.ResponseWriter, r *http.Request) {
+	books, err := database.GetAllBooks(r.Context())
+
+	if err != nil {
+		json.NewEncoder(w).Encode(map[string]string{"message": "unable to find books"})
+	}
+
+	json.NewEncoder(w).Encode(books)
+}
+
 func main() {
 	dbHost := os.Getenv("DB_HOST")
 	dbUser := os.Getenv("DB_USER")
@@ -67,7 +78,7 @@ func main() {
 	router := mux.NewRouter()
 
 	router.HandleFunc("/user/{userID}/bookchapter/{chapterURL}/seek", createOrUpdateSeek).Methods("POST")
-	// router.HandleFunc("/books", createOrUpdateSeek).Methods("POST")
+	router.HandleFunc("/books", listAllBooks).Methods("POST")
 	// router.HandleFunc("/books/{bookID}", createOrUpdateSeek).Methods("POST")
 
 	http.Handle("/", router)
