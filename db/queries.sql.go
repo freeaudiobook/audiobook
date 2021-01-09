@@ -26,16 +26,16 @@ func (q *Queries) NewSeekPosition(ctx context.Context, arg NewSeekPositionParams
 }
 
 const updateSeekPosition = `-- name: UpdateSeekPosition :exec
-UPDATE PLAYSTATE SET seek_position=$1 where user_id=$2 and book_chapter=$3
+UPDATE PLAYSTATE SET seek_position=$3 where user_id=$1 and book_chapter=$2
 `
 
 type UpdateSeekPositionParams struct {
-	SeekPosition sql.NullInt32  `json:"seek_position"`
 	UserID       uuid.UUID      `json:"user_id"`
 	BookChapter  sql.NullString `json:"book_chapter"`
+	SeekPosition sql.NullInt32  `json:"seek_position"`
 }
 
 func (q *Queries) UpdateSeekPosition(ctx context.Context, arg UpdateSeekPositionParams) error {
-	_, err := q.exec(ctx, q.updateSeekPositionStmt, updateSeekPosition, arg.SeekPosition, arg.UserID, arg.BookChapter)
+	_, err := q.exec(ctx, q.updateSeekPositionStmt, updateSeekPosition, arg.UserID, arg.BookChapter, arg.SeekPosition)
 	return err
 }
