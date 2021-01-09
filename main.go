@@ -67,6 +67,8 @@ func main() {
 	router := mux.NewRouter()
 
 	router.HandleFunc("/user/{userID}/bookchapter/{chapterURL}/seek", createOrUpdateSeek).Methods("POST")
+	// router.HandleFunc("/books", createOrUpdateSeek).Methods("POST")
+	// router.HandleFunc("/books/{bookID}", createOrUpdateSeek).Methods("POST")
 
 	http.Handle("/", router)
 	fmt.Println("Starting on port 8000")
