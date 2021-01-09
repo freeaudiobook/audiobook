@@ -1,0 +1,61 @@
+{"_id":{"$oid":"5e8b7d4b8d317cbee202bd63"},"id":3,"name":"William Shakespeare"}
+{"_id":{"$oid":"5e8b7d4b8d317cbee202bd64"},"id":4,"name":"Robert Louis Stevenson"}
+{"_id":{"$oid":"5e8b7d4b8d317cbee202bd65"},"id":5,"name":"Charlotte Brontë"}
+{"_id":{"$oid":"5e8b7d4b8d317cbee202bd66"},"id":6,"name":"Johanna Spyri"}
+{"_id":{"$oid":"5e8b7d4b8d317cbee202bd67"},"id":7,"name":"Jules Verne"}
+{"_id":{"$oid":"5e8b7d4b8d317cbee202bd68"},"id":8,"name":"William Walker Atkinson"}
+{"_id":{"$oid":"5e8b7d4b8d317cbee202bd69"},"id":9,"name":"Edgar Allan Poe"}
+{"_id":{"$oid":"5e8b7d4b8d317cbee202bd6a"},"id":10,"name":"Jacob \u0026 Wilhelm Grimm"}
+{"_id":{"$oid":"5e8b7d4b8d317cbee202bd6b"},"id":11,"name":"F. Scott Fitzgerald"}
+{"_id":{"$oid":"5e8b7d4b8d317cbee202bd6c"},"id":12,"name":"Rudyard Kipling"}
+{"_id":{"$oid":"5e8b7d4b8d317cbee202bd6d"},"id":13,"name":"Geronimo"}
+{"_id":{"$oid":"5e8b7d4b8d317cbee202bd6e"},"id":14,"name":"P. T. Barnum"}
+{"_id":{"$oid":"5e8b7d4b8d317cbee202bd6f"},"id":15,"name":"Orison Swett Marden"}
+{"_id":{"$oid":"5e8b7d4b8d317cbee202bd70"},"id":16,"name":"Marcus Aurelius"}
+{"_id":{"$oid":"5e8b7d4b8d317cbee202bd71"},"id":17,"name":"Friedrich Nietzsche"}
+{"_id":{"$oid":"5e8b7d4b8d317cbee202bd72"},"id":18,"name":"D. H. Lawrence"}
+{"_id":{"$oid":"5e8b7d4b8d317cbee202bd73"},"id":19,"name":"Charlotte Mew"}
+{"_id":{"$oid":"5e8b7d4b8d317cbee202bd74"},"id":20,"name":"James Joyce"}
+{"_id":{"$oid":"5e8b7d4b8d317cbee202bd75"},"id":21,"name":"Joseph Sheridan Le Fanu"}
+{"_id":{"$oid":"5e8b7d4b8d317cbee202bd76"},"id":22,"name":"Pádraic Colum"}
+{"_id":{"$oid":"5e8b7d4b8d317cbee202bd77"},"id":23,"name":"Leo Tolstoy"}
+{"_id":{"$oid":"5e8b7d4b8d317cbee202bd78"},"id":24,"name":"Kate Chopin"}
+{"_id":{"$oid":"5e8b7d4b8d317cbee202bd79"},"id":25,"name":"George Eliot"}
+{"_id":{"$oid":"5e8b7d4b8d317cbee202bd7a"},"id":26,"name":"Joseph Conrad"}
+{"_id":{"$oid":"5e8b7d4b8d317cbee202bd7b"},"id":27,"name":"Randall Garrett"}
+{"_id":{"$oid":"5e8b7d4b8d317cbee202bd7c"},"id":28,"name":"Fred M. White"}
+{"_id":{"$oid":"5e8b7d4b8d317cbee202bd7d"},"id":29,"name":"Violet Jacob"}
+{"_id":{"$oid":"5e8b7d4b8d317cbee202bd7e"},"id":30,"name":"Voltaire"}
+{"_id":{"$oid":"5e8b7d4b8d317cbee202bd7f"},"id":31,"name":"Franz Kafka"}
+{"_id":{"$oid":"5e8b7d4b8d317cbee202bd80"},"id":32,"name":"Nella Larsen"}
+{"_id":{"$oid":"5e8b7d4b8d317cbee202bd81"},"id":33,"name":"Willa Sibert Cather"}
+{"_id":{"$oid":"5e8b7d4b8d317cbee202bd82"},"id":34,"name":"Henry James"}
+{"_id":{"$oid":"5e8b7d4b8d317cbee202bd83"},"id":35,"name":"Johann Wolfgang Von Goethe"}
+{"_id":{"$oid":"5e8b7d4b8d317cbee202bd84"},"id":36,"name":"Hermann Hesse"}
+{"_id":{"$oid":"5e8b7d4b8d317cbee202bd85"},"id":37,"name":"Laura Lee Hope"}
+{"_id":{"$oid":"5e8b7d4b8d317cbee202bd86"},"id":38,"name":"Oscar Wilde"}
+{"_id":{"$oid":"5e8b7d4b8d317cbee202bd87"},"id":39,"name":"Edward P. Roe"}
+{"_id":{"$oid":"5e8b7d4b8d317cbee202bd88"},"id":40,"name":"Frank Mundell"}
+{"_id":{"$oid":"5e8b7d4b8d317cbee202bd89"},"id":41,"name":"Guy Boothby"}
+{"_id":{"$oid":"5e8b7d4b8d317cbee202bd8a"},"id":42,"name":"Eden Phillpotts"}
+{"_id":{"$oid":"5e8b7d4b8d317cbee202bd8b"},"id":43,"name":"Henry Kitchell Webster"}
+{"_id":{"$oid":"5e8b7d4b8d317cbee202bd8c"},"id":44,"name":"Basil King"}
+{"_id":{"$oid":"5e8b7d4b8d317cbee202bd8d"},"id":45,"name":"Cenydd Morus"}
+{"_id":{"$oid":"5e8b7d4b8d317cbee202bd8e"},"id":46,"name":"Arthur Wing Pinero"}
+{"_id":{"$oid":"5e8b7d4b8d317cbee202bd8f"},"id":47,"name":"Margaret Warner Morley"}
+{"_id":{"$oid":"5e8b7d4b8d317cbee202bd90"},"id":48,"name":"Arthur Adams"}
+{"_id":{"$oid":"5e8b7d4b8d317cbee202bd91"},"id":49,"name":"Marshall Saunders"}
+{"_id":{"$oid":"5e8b7d4b8d317cbee202bd92"},"id":50,"name":"Louise Imogen Guiney"}
+{"_id":{"$oid":"5e8b7d4b8d317cbee202bd93"},"id":51,"name":"Radclyffe Hall"}
+{"_id":{"$oid":"5e8b7d4b8d317cbee202bd94"},"id":52,"name":"Sam R. Watkins"}
+{"_id":{"$oid":"5e8b7d4b8d317cbee202bd95"},"id":53,"name":"Upton Sinclair"}
+{"_id":{"$oid":"5e8b7d4b8d317cbee202bd96"},"id":54,"name":"Milo Hastings"}
+{"_id":{"$oid":"5e8b7d4b8d317cbee202bd97"},"id":55,"name":"Friedrich Engels"}
+{"_id":{"$oid":"5e8b7d4b8d317cbee202bd98"},"id":56,"name":"Sophocles"}
+{"_id":{"$oid":"5e8b7d4b8d317cbee202bd99"},"id":57,"name":"Yacki Raizizun"}
+{"_id":{"$oid":"5e8b7d4b8d317cbee202bd9a"},"id":58,"name":"Wallace D. Wattles"}
+{"_id":{"$oid":"5e8b7d4b8d317cbee202bd9b"},"id":59,"name":"Kirk Munroe"}
+{"_id":{"$oid":"5e8b7d4b8d317cbee202bd9c"},"id":60,"name":"Elsie Lincoln Benedict"}
+{"_id":{"$oid":"5e8b7d4b8d317cbee202bd9d"},"id":61,"name":"Lucy Maud Montgomery"}
+{"_id":{"$oid":"5e8b7d4b8d317cbee202bd9e"},"id":62,"name":"Henrik Ibsen"}
+{"_id":{"$oid":"5e8b7d4b8d317cbee202bd9f"},"id":63,"name":"P. G. Wodehouse"}
