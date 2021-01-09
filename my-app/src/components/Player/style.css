@@ -1,9 +1,23 @@
 .player{
-    position: absolute;
-    top: 90vh;
-    height: 10vh;
+    /* position: absolute;
+    top: 83vh;
+    height: 30vh; */
     width: 100%;
     background: white;
-    box-sizing: border-box;
+    /* box-sizing: border-box;
     padding: 20px;
+    padding-bottom: 0px; */
+    padding: 20px;
+    box-sizing: border-box;
+    display: flex;
+    gap: 20px;
+    align-items: center;
+}
+
+.audio-player-wrapper{
+    flex: 1;
+}
+
+.audio-chapter-name{
+    font-weight: bold;
 }
