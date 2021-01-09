@@ -13,6 +13,7 @@ import (
 	"github.com/extrasalt/audiobook/db"
 	"github.com/google/uuid"
 	"github.com/gorilla/mux"
+	_ "github.com/lib/pq"
 )
 
 func createOrUpdateSeek(w http.ResponseWriter, r *http.Request) {
@@ -94,7 +95,7 @@ func main() {
 
 	c, err := sql.Open("postgres", psqlInfo)
 	if err != nil {
-		log.Fatalln("Couldn't connect to postgres")
+		log.Fatalln("Couldn't connect to postgres", err)
 		return
 	}
 	defer c.Close()

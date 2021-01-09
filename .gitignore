@@ -15,3 +15,6 @@ audiobook
 
 # Dependency directories (remove the comment below to include it)
 # vendor/
+
+# Env config
+.envrc
