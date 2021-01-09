@@ -22,6 +22,15 @@ func New(db DBTX) *Queries {
 func Prepare(ctx context.Context, db DBTX) (*Queries, error) {
 	q := Queries{db: db}
 	var err error
+	if q.fetchBooksByGenreStmt, err = db.PrepareContext(ctx, fetchBooksByGenre); err != nil {
+		return nil, fmt.Errorf("error preparing query FetchBooksByGenre: %w", err)
+	}
+	if q.fetchBooksByTitleAndAuthorStmt, err = db.PrepareContext(ctx, fetchBooksByTitleAndAuthor); err != nil {
+		return nil, fmt.Errorf("error preparing query FetchBooksByTitleAndAuthor: %w", err)
+	}
+	if q.getAllBooksStmt, err = db.PrepareContext(ctx, getAllBooks); err != nil {
+		return nil, fmt.Errorf("error preparing query GetAllBooks: %w", err)
+	}
 	if q.newSeekPositionStmt, err = db.PrepareContext(ctx, newSeekPosition); err != nil {
 		return nil, fmt.Errorf("error preparing query NewSeekPosition: %w", err)
 	}
@@ -33,6 +42,21 @@ func Prepare(ctx context.Context, db DBTX) (*Queries, error) {
 
 func (q *Queries) Close() error {
 	var err error
+	if q.fetchBooksByGenreStmt != nil {
+		if cerr := q.fetchBooksByGenreStmt.Close(); cerr != nil {
+			err = fmt.Errorf("error closing fetchBooksByGenreStmt: %w", cerr)
+		}
+	}
+	if q.fetchBooksByTitleAndAuthorStmt != nil {
+		if cerr := q.fetchBooksByTitleAndAuthorStmt.Close(); cerr != nil {
+			err = fmt.Errorf("error closing fetchBooksByTitleAndAuthorStmt: %w", cerr)
+		}
+	}
+	if q.getAllBooksStmt != nil {
+		if cerr := q.getAllBooksStmt.Close(); cerr != nil {
+			err = fmt.Errorf("error closing getAllBooksStmt: %w", cerr)
+		}
+	}
 	if q.newSeekPositionStmt != nil {
 		if cerr := q.newSeekPositionStmt.Close(); cerr != nil {
 			err = fmt.Errorf("error closing newSeekPositionStmt: %w", cerr)
@@ -80,17 +104,23 @@ func (q *Queries) queryRow(ctx context.Context, stmt *sql.Stmt, query string, ar
 }
 
 type Queries struct {
-	db                     DBTX
-	tx                     *sql.Tx
-	newSeekPositionStmt    *sql.Stmt
-	updateSeekPositionStmt *sql.Stmt
+	db                             DBTX
+	tx                             *sql.Tx
+	fetchBooksByGenreStmt          *sql.Stmt
+	fetchBooksByTitleAndAuthorStmt *sql.Stmt
+	getAllBooksStmt                *sql.Stmt
+	newSeekPositionStmt            *sql.Stmt
+	updateSeekPositionStmt         *sql.Stmt
 }
 
 func (q *Queries) WithTx(tx *sql.Tx) *Queries {
 	return &Queries{
-		db:                     tx,
-		tx:                     tx,
-		newSeekPositionStmt:    q.newSeekPositionStmt,
-		updateSeekPositionStmt: q.updateSeekPositionStmt,
+		db:                             tx,
+		tx:                             tx,
+		fetchBooksByGenreStmt:          q.fetchBooksByGenreStmt,
+		fetchBooksByTitleAndAuthorStmt: q.fetchBooksByTitleAndAuthorStmt,
+		getAllBooksStmt:                q.getAllBooksStmt,
+		newSeekPositionStmt:            q.newSeekPositionStmt,
+		updateSeekPositionStmt:         q.updateSeekPositionStmt,
 	}
 }

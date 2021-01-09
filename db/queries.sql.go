@@ -10,6 +10,122 @@ import (
 	"github.com/google/uuid"
 )
 
+const fetchBooksByGenre = `-- name: FetchBooksByGenre :many
+SELECT book_id, title, image_url, librivox_url, genre, author, summary, language, total_duration FROM BOOKS where genre like '%' || $1 || '%' ORDER BY title
+`
+
+func (q *Queries) FetchBooksByGenre(ctx context.Context, dollar_1 sql.NullString) ([]Book, error) {
+	rows, err := q.query(ctx, q.fetchBooksByGenreStmt, fetchBooksByGenre, dollar_1)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+	var items []Book
+	for rows.Next() {
+		var i Book
+		if err := rows.Scan(
+			&i.BookID,
+			&i.Title,
+			&i.ImageUrl,
+			&i.LibrivoxUrl,
+			&i.Genre,
+			&i.Author,
+			&i.Summary,
+			&i.Language,
+			&i.TotalDuration,
+		); err != nil {
+			return nil, err
+		}
+		items = append(items, i)
+	}
+	if err := rows.Close(); err != nil {
+		return nil, err
+	}
+	if err := rows.Err(); err != nil {
+		return nil, err
+	}
+	return items, nil
+}
+
+const fetchBooksByTitleAndAuthor = `-- name: FetchBooksByTitleAndAuthor :many
+SELECT book_id, title, image_url, librivox_url, genre, author, summary, language, total_duration FROM BOOKS where title LIKE '%' || $1 || '%' and author LIKE '%' || $2 || '%' ORDER BY title
+`
+
+type FetchBooksByTitleAndAuthorParams struct {
+	Column1 sql.NullString `json:"column_1"`
+	Column2 sql.NullString `json:"column_2"`
+}
+
+func (q *Queries) FetchBooksByTitleAndAuthor(ctx context.Context, arg FetchBooksByTitleAndAuthorParams) ([]Book, error) {
+	rows, err := q.query(ctx, q.fetchBooksByTitleAndAuthorStmt, fetchBooksByTitleAndAuthor, arg.Column1, arg.Column2)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+	var items []Book
+	for rows.Next() {
+		var i Book
+		if err := rows.Scan(
+			&i.BookID,
+			&i.Title,
+			&i.ImageUrl,
+			&i.LibrivoxUrl,
+			&i.Genre,
+			&i.Author,
+			&i.Summary,
+			&i.Language,
+			&i.TotalDuration,
+		); err != nil {
+			return nil, err
+		}
+		items = append(items, i)
+	}
+	if err := rows.Close(); err != nil {
+		return nil, err
+	}
+	if err := rows.Err(); err != nil {
+		return nil, err
+	}
+	return items, nil
+}
+
+const getAllBooks = `-- name: GetAllBooks :many
+SELECT book_id, title, image_url, librivox_url, genre, author, summary, language, total_duration FROM BOOKS
+`
+
+func (q *Queries) GetAllBooks(ctx context.Context) ([]Book, error) {
+	rows, err := q.query(ctx, q.getAllBooksStmt, getAllBooks)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+	var items []Book
+	for rows.Next() {
+		var i Book
+		if err := rows.Scan(
+			&i.BookID,
+			&i.Title,
+			&i.ImageUrl,
+			&i.LibrivoxUrl,
+			&i.Genre,
+			&i.Author,
+			&i.Summary,
+			&i.Language,
+			&i.TotalDuration,
+		); err != nil {
+			return nil, err
+		}
+		items = append(items, i)
+	}
+	if err := rows.Close(); err != nil {
+		return nil, err
+	}
+	if err := rows.Err(); err != nil {
+		return nil, err
+	}
+	return items, nil
+}
+
 const newSeekPosition = `-- name: NewSeekPosition :exec
 INSERT into PLAYSTATE(user_id, book_chapter, seek_position) values($1,$2, $3)
 `

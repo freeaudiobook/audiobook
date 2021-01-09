@@ -10,3 +10,6 @@ SELECT * FROM BOOKS where title LIKE '%' || $1 || '%' and author LIKE '%' || $2 
 
 -- name: FetchBooksByGenre :many
 SELECT * FROM BOOKS where genre like '%' || $1 || '%' ORDER BY title;
+
+-- name: GetAllBooks :many
+SELECT * FROM BOOKS;
