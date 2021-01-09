@@ -89,6 +89,23 @@ func getBookById(w http.ResponseWriter, r *http.Request) {
 	json.NewEncoder(w).Encode(book)
 }
 
+func getSeek(w http.ResponseWriter, r *http.Request) {
+	vars := mux.Vars(r)
+
+	seekPostionArgs := db.GetSeekPositionParams{
+		BookChapter: sql.NullString{vars["chapterURL"], true},
+		UserID:      uuid.MustParse(vars["userID"]),
+	}
+	seek, err := database.GetSeekPosition(r.Context(), seekPostionArgs)
+
+	if err != nil {
+		json.NewEncoder(w).Encode(map[string]string{"message": "unable to find books"})
+	}
+
+	o := strconv.Itoa(int(seek.Int32))
+	w.Write([]byte(o))
+}
+
 func main() {
 	dbHost := os.Getenv("DB_HOST")
 	dbUser := os.Getenv("DB_USER")
@@ -114,6 +131,7 @@ func main() {
 	router := mux.NewRouter()
 
 	router.HandleFunc("/user/{userID}/bookchapter/{chapterURL}/seek", createOrUpdateSeek).Methods("POST")
+	router.HandleFunc("/user/{userID}/bookchapter/{chapterURL}/seek", getSeek).Methods("GET")
 	router.HandleFunc("/books", listAllBooks).Methods("GET")
 	router.HandleFunc("/books/{bookID}", getBookById).Methods("GET")
 	router.HandleFunc("/search", search).Methods("GET")
