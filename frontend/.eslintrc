@@ -1,9 +1,0 @@
-{
-    "extends": "react-app",
-    "plugins": [
-        "prettier",
-        "react",
-        "import"
-    ],
-    "env": {}
-}

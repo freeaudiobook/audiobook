@@ -1,0 +1,37 @@
+.group{
+    color: white;
+}
+
+.audiobooks{
+    display: grid;
+    flex-wrap: wrap;
+    flex-direction: row;
+    grid-template-columns: repeat(3, 30%);
+    gap: 20px;
+}
+
+.audiobook{
+    border-radius: 4px;
+    padding: 20px;
+    background: #181818;
+    /* height: fit-content; */
+    /* width: 200px; */
+}
+
+.audiobook:hover{
+    background: #282828;
+    cursor: pointer;
+}
+
+.audiobook img{
+    width: 100%;
+}
+
+.audiobook .title{
+    margin-top: 5px;
+    color: white;
+}
+
+.audiobook .author{
+    color: rgb(179, 179, 179);
+}

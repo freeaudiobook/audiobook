@@ -1,23 +1,40 @@
-import logo from './logo.svg';
+import React, { useState } from 'react'
+import { BrowserRouter, Route, Switch } from 'react-router-dom'
+
+import SideMenu from './components/SideMenu'
+import Player from './components/Player'
+
+import ListingPage from './pages/ListingPage'
+import Audiobook from './pages/Audiobook'
+
+import { GlobalContext } from './contexts'
+
 import './App.css';
 
 function App() {
+
+  const [currentAudio, setCurrentAudio] = useState({})
+
+  const contextValue = {
+    currentAudio, setCurrentAudio
+  }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="main-container">
+      <BrowserRouter>
+        <GlobalContext.Provider value={contextValue}>
+          <SideMenu />
+          <div className="rest-page">
+            <Switch>
+              <Route exact path="/" component={ListingPage}/>
+              <Route exact path="/audiobook">
+                <Audiobook />
+              </Route>
+            </Switch>
+          </div>
+          <Player />
+        </GlobalContext.Provider>
+      </BrowserRouter>
     </div>
   );
 }

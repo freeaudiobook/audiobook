@@ -1,0 +1,9 @@
+.player{
+    position: absolute;
+    top: 90vh;
+    height: 10vh;
+    width: 100%;
+    background: white;
+    box-sizing: border-box;
+    padding: 20px;
+}
