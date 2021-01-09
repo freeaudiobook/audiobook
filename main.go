@@ -106,6 +106,24 @@ func getSeek(w http.ResponseWriter, r *http.Request) {
 	w.Write([]byte(o))
 }
 
+func newBook(w http.ResponseWriter, r *http.Request) {
+
+	var bookParams db.AddBookParams
+	b, err := ioutil.ReadAll(r.Body)
+	if err != nil {
+		json.NewEncoder(w).Encode(map[string]string{"message": "unable to add book"})
+	}
+	json.Unmarshal(b, &bookParams)
+	bookParams.BookID, _ = uuid.NewRandom()
+	err = database.AddBook(r.Context(), bookParams)
+	if err != nil {
+		json.NewEncoder(w).Encode(map[string]string{"message": "unable to add book"})
+	}
+
+	json.NewEncoder(w).Encode(map[string]string{"message": "successfully added the book"})
+
+}
+
 func main() {
 	dbHost := os.Getenv("DB_HOST")
 	dbUser := os.Getenv("DB_USER")
@@ -133,6 +151,7 @@ func main() {
 	router.HandleFunc("/user/{userID}/bookchapter/{chapterURL}/seek", createOrUpdateSeek).Methods("POST")
 	router.HandleFunc("/user/{userID}/bookchapter/{chapterURL}/seek", getSeek).Methods("GET")
 	router.HandleFunc("/books", listAllBooks).Methods("GET")
+	router.HandleFunc("/books", newBook).Methods("POST")
 	router.HandleFunc("/books/{bookID}", getBookById).Methods("GET")
 	router.HandleFunc("/search", search).Methods("GET")
 
