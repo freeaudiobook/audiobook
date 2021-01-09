@@ -16,13 +16,13 @@ import (
 
 func createOrUpdateSeek(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
-	body, err := string(ioutil.ReadAll(r.Body))
+	body, err := ioutil.ReadAll(r.Body)
 	if err != nil {
 		http.Error(w, "Seek position not found", http.StatusBadRequest)
 		return
 	}
 
-	seekPosition, err := strconv.Atoi(body)
+	seekPosition, err := strconv.Atoi(string(body))
 	if err != nil {
 		http.Error(w, "Seek position not found", http.StatusBadRequest)
 		return
