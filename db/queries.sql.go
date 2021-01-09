@@ -10,6 +10,37 @@ import (
 	"github.com/google/uuid"
 )
 
+const addBook = `-- name: AddBook :exec
+INSERT into BOOKS(book_id, title, image_url, librivox_url, genre, author, summary, language, total_duration) values($1,$2,$3,$4,$5,$6,$7,$8,$9)
+`
+
+type AddBookParams struct {
+	BookID        uuid.UUID      `json:"book_id"`
+	Title         sql.NullString `json:"title"`
+	ImageUrl      sql.NullString `json:"image_url"`
+	LibrivoxUrl   sql.NullString `json:"librivox_url"`
+	Genre         sql.NullString `json:"genre"`
+	Author        sql.NullString `json:"author"`
+	Summary       sql.NullString `json:"summary"`
+	Language      sql.NullString `json:"language"`
+	TotalDuration sql.NullString `json:"total_duration"`
+}
+
+func (q *Queries) AddBook(ctx context.Context, arg AddBookParams) error {
+	_, err := q.exec(ctx, q.addBookStmt, addBook,
+		arg.BookID,
+		arg.Title,
+		arg.ImageUrl,
+		arg.LibrivoxUrl,
+		arg.Genre,
+		arg.Author,
+		arg.Summary,
+		arg.Language,
+		arg.TotalDuration,
+	)
+	return err
+}
+
 const fetchBooksByGenre = `-- name: FetchBooksByGenre :many
 SELECT book_id, title, image_url, librivox_url, genre, author, summary, language, total_duration FROM BOOKS where genre like '%' || $1 || '%' ORDER BY title
 `
@@ -147,19 +178,20 @@ func (q *Queries) GetBookByID(ctx context.Context, bookID uuid.UUID) (Book, erro
 	return i, err
 }
 
-const newSeekPosition = `-- name: NewSeekPosition :exec
-INSERT into PLAYSTATE(user_id, book_chapter, seek_position) values($1,$2, $3)
+const getSeekPosition = `-- name: GetSeekPosition :one
+SELECT seek_position from PLAYSTATE where user_id=$1 AND book_chapter=$2
 `
 
-type NewSeekPositionParams struct {
-	UserID       uuid.UUID      `json:"user_id"`
-	BookChapter  sql.NullString `json:"book_chapter"`
-	SeekPosition sql.NullInt32  `json:"seek_position"`
+type GetSeekPositionParams struct {
+	UserID      uuid.UUID      `json:"user_id"`
+	BookChapter sql.NullString `json:"book_chapter"`
 }
 
-func (q *Queries) NewSeekPosition(ctx context.Context, arg NewSeekPositionParams) error {
-	_, err := q.exec(ctx, q.newSeekPositionStmt, newSeekPosition, arg.UserID, arg.BookChapter, arg.SeekPosition)
-	return err
+func (q *Queries) GetSeekPosition(ctx context.Context, arg GetSeekPositionParams) (sql.NullInt32, error) {
+	row := q.queryRow(ctx, q.getSeekPositionStmt, getSeekPosition, arg.UserID, arg.BookChapter)
+	var seek_position sql.NullInt32
+	err := row.Scan(&seek_position)
+	return seek_position, err
 }
 
 const updateSeekPosition = `-- name: UpdateSeekPosition :exec

@@ -22,6 +22,9 @@ func New(db DBTX) *Queries {
 func Prepare(ctx context.Context, db DBTX) (*Queries, error) {
 	q := Queries{db: db}
 	var err error
+	if q.addBookStmt, err = db.PrepareContext(ctx, addBook); err != nil {
+		return nil, fmt.Errorf("error preparing query AddBook: %w", err)
+	}
 	if q.fetchBooksByGenreStmt, err = db.PrepareContext(ctx, fetchBooksByGenre); err != nil {
 		return nil, fmt.Errorf("error preparing query FetchBooksByGenre: %w", err)
 	}
@@ -34,8 +37,8 @@ func Prepare(ctx context.Context, db DBTX) (*Queries, error) {
 	if q.getBookByIDStmt, err = db.PrepareContext(ctx, getBookByID); err != nil {
 		return nil, fmt.Errorf("error preparing query GetBookByID: %w", err)
 	}
-	if q.newSeekPositionStmt, err = db.PrepareContext(ctx, newSeekPosition); err != nil {
-		return nil, fmt.Errorf("error preparing query NewSeekPosition: %w", err)
+	if q.getSeekPositionStmt, err = db.PrepareContext(ctx, getSeekPosition); err != nil {
+		return nil, fmt.Errorf("error preparing query GetSeekPosition: %w", err)
 	}
 	if q.updateSeekPositionStmt, err = db.PrepareContext(ctx, updateSeekPosition); err != nil {
 		return nil, fmt.Errorf("error preparing query UpdateSeekPosition: %w", err)
@@ -45,6 +48,11 @@ func Prepare(ctx context.Context, db DBTX) (*Queries, error) {
 
 func (q *Queries) Close() error {
 	var err error
+	if q.addBookStmt != nil {
+		if cerr := q.addBookStmt.Close(); cerr != nil {
+			err = fmt.Errorf("error closing addBookStmt: %w", cerr)
+		}
+	}
 	if q.fetchBooksByGenreStmt != nil {
 		if cerr := q.fetchBooksByGenreStmt.Close(); cerr != nil {
 			err = fmt.Errorf("error closing fetchBooksByGenreStmt: %w", cerr)
@@ -65,9 +73,9 @@ func (q *Queries) Close() error {
 			err = fmt.Errorf("error closing getBookByIDStmt: %w", cerr)
 		}
 	}
-	if q.newSeekPositionStmt != nil {
-		if cerr := q.newSeekPositionStmt.Close(); cerr != nil {
-			err = fmt.Errorf("error closing newSeekPositionStmt: %w", cerr)
+	if q.getSeekPositionStmt != nil {
+		if cerr := q.getSeekPositionStmt.Close(); cerr != nil {
+			err = fmt.Errorf("error closing getSeekPositionStmt: %w", cerr)
 		}
 	}
 	if q.updateSeekPositionStmt != nil {
@@ -114,11 +122,12 @@ func (q *Queries) queryRow(ctx context.Context, stmt *sql.Stmt, query string, ar
 type Queries struct {
 	db                             DBTX
 	tx                             *sql.Tx
+	addBookStmt                    *sql.Stmt
 	fetchBooksByGenreStmt          *sql.Stmt
 	fetchBooksByTitleAndAuthorStmt *sql.Stmt
 	getAllBooksStmt                *sql.Stmt
 	getBookByIDStmt                *sql.Stmt
-	newSeekPositionStmt            *sql.Stmt
+	getSeekPositionStmt            *sql.Stmt
 	updateSeekPositionStmt         *sql.Stmt
 }
 
@@ -126,11 +135,12 @@ func (q *Queries) WithTx(tx *sql.Tx) *Queries {
 	return &Queries{
 		db:                             tx,
 		tx:                             tx,
+		addBookStmt:                    q.addBookStmt,
 		fetchBooksByGenreStmt:          q.fetchBooksByGenreStmt,
 		fetchBooksByTitleAndAuthorStmt: q.fetchBooksByTitleAndAuthorStmt,
 		getAllBooksStmt:                q.getAllBooksStmt,
 		getBookByIDStmt:                q.getBookByIDStmt,
-		newSeekPositionStmt:            q.newSeekPositionStmt,
+		getSeekPositionStmt:            q.getSeekPositionStmt,
 		updateSeekPositionStmt:         q.updateSeekPositionStmt,
 	}
 }

@@ -1,5 +1,7 @@
 import React from 'react'
 
+import Audiobook from '../../components/Audiobook'
+
 import './style.css'
 
 function ListingPage({ history }){
@@ -83,23 +85,15 @@ function ListingPage({ history }){
     ]
 
     return (
-        <div className="listing-page">
+        <div className="listing-page rest-page">
             <div className="group">
-                <h2 className="discover">Discover</h2>
+                <h2 className="heading discover">Discover</h2>
                 <br/>
-                <div className="audiobooks">
+                <div className="items audiobooks">
                 {
                         audiobooks.map(
                             audiobook => 
-                                <div className="audiobook" onClick={() => history.push("/audiobook")}>
-                                    <img src={audiobook.imgUrl}/>
-                                    <h2 className="title">
-                                        {audiobook.title}
-                                    </h2>
-                                    <h3 className="author">
-                                        By {audiobook.author}
-                                        </h3>
-                                </div>
+                                <Audiobook {...audiobook} history={history} />
                         )
                     }
                 </div>

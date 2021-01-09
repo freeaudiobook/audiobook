@@ -1,7 +1,8 @@
-import React, { useContext, useEffect } from 'react'
+import React, { useContext, useEffect  } from 'react'
 import ReactAudioPlayer  from 'react-h5-audio-player'
 
 import { GlobalContext } from '../../contexts'
+import useWindowDimensions from '../../customHooks/useWindowDimensions'
 
 import 'react-h5-audio-player/lib/styles.css';
 import './style.css'
@@ -9,6 +10,7 @@ import './style.css'
 function Player(){
 
     const { currentAudio } = useContext(GlobalContext)
+    const { width, height } = useWindowDimensions()
 
     const storeCurrentSeekTime = (currentAudio, currentTime) => {
         console.log(currentAudio, Math.floor(currentTime))
@@ -28,6 +30,11 @@ function Player(){
                         src={currentAudio.url} 
                         autoPlay={false} 
                         onListen={(e) => storeCurrentSeekTime(currentAudio, e.target.currentTime)}
+                        showJumpControls={width > 450}
+                        showSkipControls={width > 450}
+                        showFilledVolume={width > 450}
+                        showDownloadProgress={width > 450}
+                        showFilledProgress={width > 450}
                     />
                 }
             </div>

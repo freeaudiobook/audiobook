@@ -1,5 +1,5 @@
--- name: NewSeekPosition :exec
-INSERT into PLAYSTATE(user_id, book_chapter, seek_position) values($1,$2, $3);
+-- name: GetSeekPosition :one
+SELECT seek_position from PLAYSTATE where user_id=$1 AND book_chapter=$2;
 
 -- name: UpdateSeekPosition :exec
 INSERT INTO PLAYSTATE(user_id, book_chapter, seek_position) values ($1, $2, $3)
@@ -16,3 +16,6 @@ SELECT * FROM BOOKS;
 
 -- name: GetBookByID :one
 SELECT * FROM  BOOKS where book_id=$1;
+
+-- name: AddBook :exec
+INSERT into BOOKS(book_id, title, image_url, librivox_url, genre, author, summary, language, total_duration) values($1,$2,$3,$4,$5,$6,$7,$8,$9);

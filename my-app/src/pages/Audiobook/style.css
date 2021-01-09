@@ -15,5 +15,48 @@
 .audiobook-page .chapter:hover{
     cursor: pointer;
     background: rgba(255, 255, 255, 0.2);
-    /* border-bottom: none; */
+}
+
+.audiobook-page .top{
+    display: flex;
+    gap: 20px;
+    align-items: flex-end;
+}
+
+.audiobook-page .top .title{
+    margin-bottom: 5px;
+}
+
+.audiobook-page .top .author{
+    margin-top: 0px;
+    margin-bottom: 0px;
+}
+
+.audiobook-page .top img{
+    max-width: 200px;
+    box-shadow: 0 4px 60px rgba(0,0,0,.5);
+    border-radius: 5px;
+}
+
+.chapters .chapter{
+    display: flex;
+    gap: 20px;
+}
+
+.chapters .chapter img{
+    max-height: 50px;
+    border-radius: 7x;
+}
+
+@media (max-width: 600px){
+    .audiobook-page .top img{
+        width: 150px;
+    }
+    .audiobook-page .top .title{
+        font-size: 22px;
+    }
+    
+    .audiobook-page .top .author{
+        font-size: 18px;
+    }
 }
