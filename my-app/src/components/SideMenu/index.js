@@ -1,17 +1,12 @@
 import React, { useContext, useState } from 'react'
-import createHistory from 'history/createBrowserHistory'
 
-import { GlobalContext } from '../../contexts';
+import { BsSearch, BsFillHouseDoorFill } from 'react-icons/bs';
 
 import './style.css'
 
-function SideMenu({ }) {
+function SideMenu({ history }) {
 
-    const { history } = useContext(GlobalContext)
-
-    // const history = createHistory();
-
-    const [selectedPage, setSelectedPage] = useState(false)
+    // const [selectedPage, setSelectedPage] = useState(false)
 
     return (
         <div className="side-menu">
@@ -23,15 +18,21 @@ function SideMenu({ }) {
                     className="action" 
                     onClick={() => history.push("/")}
                 >
-                        Home
+                       <BsFillHouseDoorFill size={"20px"}/> 
+                       <span class="text">
+                            Home
+                       </span>
                     </div>
-                {/* <div 
+                <div 
                     className="action"
                     onClick={() => history.push("/search")}
                 >
-                    Search
+                    <BsSearch size={"20px"}/> 
+                    <span class="text">
+                        Search
+                    </span>
                 </div>
-                <div className="action">Your Library</div> */}
+                {/* <div className="action">Your Library</div> */}
             </div>
         </div>
     )

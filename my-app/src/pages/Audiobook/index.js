@@ -58,22 +58,30 @@ function Audiobook(){
     )
 
     return (
-        <div className="audiobook-page">
-            <h1>
-                {title}
-            </h1>
-            <h3 className="author">
-                By {author}
-            </h3>
+        <div className="audiobook-page rest-page">
+            <div className="top">
+                <div className="cover-art">
+                    <img src="https://img.jakpost.net/c/2019/03/02/2019_03_02_66706_1551461528._large.jpg"/>
+                </div>
+                <div className="name-and-author">
+                    <h1 className="title">
+                        {title}
+                    </h1>
+                    <h3 className="author">
+                        By {author}
+                    </h3>
+                </div>
+            </div>
             <br/>
             <h3>Chapters</h3>
             <div className="chapters">
                 {
-                    chapters.map((chapter, index) => 
+                    chapters.map((chapter, _) => 
                         <div 
                             className="chapter"
                             onClick={() => updateCurrentAudio(chapter)}
                         >
+                            <img src="https://img.jakpost.net/c/2019/03/02/2019_03_02_66706_1551461528._large.jpg"/>
                             <h4>{chapter.name}</h4>
                         </div>
                     )

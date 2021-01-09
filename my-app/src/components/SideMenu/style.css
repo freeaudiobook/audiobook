@@ -1,5 +1,4 @@
 .side-menu{
-  /* height: 100vh; */
   overflow: hidden;
   padding: 10px;
   background: black;
@@ -15,7 +14,30 @@
 }
 
 .side-menu .action{
+  /* margin: 10px 0px; */
+  margin: 5px 0px;
   padding: 5px;
   padding-left: 0px;
   cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.side-menu .action:hover{
+  /* back */
+}
+
+@media (max-width:450px){
+  .logo-and-name{
+    display: none;
+  }
+  .actions{
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+  }
+  span.text{
+    display: none
+  }
 }
