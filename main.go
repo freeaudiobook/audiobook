@@ -48,14 +48,13 @@ func search(w http.ResponseWriter, r *http.Request) {
 	var err error
 
 	if genre, found := queryParams["genre"]; found {
+		books, err = database.FetchBooksByGenre(r.Context(), sql.NullString{genre[0], true})
+	} else {
 		searchParams := db.FetchBooksByTitleAndAuthorParams{
 			Column1: sql.NullString{queryParams["title"][0], true},
 			Column2: sql.NullString{queryParams["author"][0], true},
 		}
 		books, err = database.FetchBooksByTitleAndAuthor(r.Context(), searchParams)
-
-	} else {
-		books, err = database.FetchBooksByGenre(r.Context(), sql.NullString{genre[0], true})
 	}
 
 	if err != nil {
