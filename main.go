@@ -41,6 +41,31 @@ func createOrUpdateSeek(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
+func search(w http.ResponseWriter, r *http.Request) {
+	queryParams := r.URL.Query()
+
+	var books []db.Book
+	var err error
+
+	if genre, found := queryParams["genre"]; found {
+		searchParams := db.FetchBooksByTitleAndAuthorParams{
+			Column1: sql.NullString{queryParams["title"][0], true},
+			Column2: sql.NullString{queryParams["author"][0], true},
+		}
+		books, err = database.FetchBooksByTitleAndAuthor(r.Context(), searchParams)
+
+	} else {
+		books, err = database.FetchBooksByGenre(r.Context(), sql.NullString{genre[0], true})
+	}
+
+	if err != nil {
+		http.Error(w, "Couldn't fetch books", http.StatusInternalServerError)
+		return
+	}
+
+	json.NewEncoder(w).Encode(books)
+}
+
 var database *db.Queries
 
 func listAllBooks(w http.ResponseWriter, r *http.Request) {
@@ -80,6 +105,7 @@ func main() {
 	router.HandleFunc("/user/{userID}/bookchapter/{chapterURL}/seek", createOrUpdateSeek).Methods("POST")
 	router.HandleFunc("/books", listAllBooks).Methods("POST")
 	// router.HandleFunc("/books/{bookID}", createOrUpdateSeek).Methods("POST")
+	router.HandleFunc("/search", search).Methods("GET")
 
 	http.Handle("/", router)
 	fmt.Println("Starting on port 8000")
