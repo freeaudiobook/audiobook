@@ -1,0 +1,21 @@
+.side-menu{
+  height: 100vh;
+  overflow: hidden;
+  padding: 10px;
+  background: black;
+  color: white;
+}
+
+.logo-and-name{
+  padding: 10px;
+}
+
+.side-menu .actions{
+  padding: 10px;
+}
+
+.side-menu .action{
+  padding: 5px;
+  padding-left: 0px;
+  cursor: pointer;
+}

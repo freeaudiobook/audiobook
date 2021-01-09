@@ -1,0 +1,19 @@
+.audiobook-page .author{
+    color: rgb(179, 179, 179);
+}
+
+.audiobook-page .chapters{
+    margin-top: 10px;
+}
+
+.audiobook-page .chapter{
+    padding: 10px 5px;
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.audiobook-page .chapter:hover{
+    cursor: pointer;
+    background: rgba(255, 255, 255, 0.2);
+    /* border-bottom: none; */
+}
