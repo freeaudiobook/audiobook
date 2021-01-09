@@ -59,8 +59,7 @@ func search(w http.ResponseWriter, r *http.Request) {
 	}
 
 	if err != nil {
-		http.Error(w, "Couldn't fetch books", http.StatusInternalServerError)
-		return
+		json.NewEncoder(w).Encode(map[string]string{"message": "unable to find books"})
 	}
 
 	json.NewEncoder(w).Encode(books)
