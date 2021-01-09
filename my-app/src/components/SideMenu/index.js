@@ -1,12 +1,12 @@
-import React, { useContext, useState } from 'react'
+import React from 'react'
 
 import { BsSearch, BsFillHouseDoorFill } from 'react-icons/bs';
 
 import './style.css'
 
-function SideMenu({ history }) {
+function SideMenu({ history, location }) {
 
-    // const [selectedPage, setSelectedPage] = useState(false)
+    const isSelected = (path) => location.pathname === path
 
     return (
         <div className="side-menu">
@@ -17,6 +17,7 @@ function SideMenu({ history }) {
                 <div 
                     className="action" 
                     onClick={() => history.push("/")}
+                    data-is-selected={isSelected("/")}
                 >
                        <BsFillHouseDoorFill size={"20px"}/> 
                        <span class="text">
@@ -26,6 +27,7 @@ function SideMenu({ history }) {
                 <div 
                     className="action"
                     onClick={() => history.push("/search")}
+                    data-is-selected={isSelected("/search")}
                 >
                     <BsSearch size={"20px"}/> 
                     <span class="text">

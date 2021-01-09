@@ -5,6 +5,7 @@ import { GlobalContext } from '../../contexts'
 import './style.css'
 
 function Audiobook(){
+    document.title = `${"A Tale of Two Cities"} | The Book Hub`
 
     const { setCurrentAudio } = useContext(GlobalContext)
 
@@ -59,7 +60,8 @@ function Audiobook(){
 
     return (
         <div className="audiobook-page rest-page">
-            <div className="top">
+            <div className="top" >
+                <div className="bg-img" style={{ background: `url("https://img.jakpost.net/c/2019/03/02/2019_03_02_66706_1551461528._large.jpg")` }}/> 
                 <div className="cover-art">
                     <img src="https://img.jakpost.net/c/2019/03/02/2019_03_02_66706_1551461528._large.jpg"/>
                 </div>

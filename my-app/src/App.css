@@ -1,10 +1,4 @@
-/* @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap'); */
 @import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
-
-/* *{
-  margin: 0px;
-  padding: 0px;
-} */
 
 body{
   font-family: 'Roboto', sans-serif;
@@ -12,7 +6,7 @@ body{
 
 .main-container{
   display: grid;
-  grid-template-columns: 20% 80%;
+  grid-template-columns: 232px calc(100% - 232px);
   grid-template-rows: 85vh 15vh;
   position: relative;
 }
@@ -53,7 +47,6 @@ body{
   display: grid;
   flex-wrap: wrap;
   flex-direction: row;
-  grid-template-columns: repeat(3, 30%);
   gap: 20px;
 }
 
@@ -112,8 +105,24 @@ body{
   }  
 }
 
-@media (max-width:700px){
+.group .items{
+  grid-template-columns: repeat(5, 1fr);
+}
+
+@media (max-width:1280px){
   .group .items{
-    grid-template-columns: repeat(2, 45%);
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+@media (max-width:800px){
+  .group .items{
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width:600px){
+  .group .items{
+    grid-template-columns: repeat(2, 1fr);
   }
 }

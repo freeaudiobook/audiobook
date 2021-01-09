@@ -1,31 +1,37 @@
 .side-menu{
   overflow: hidden;
   padding: 10px;
-  background: black;
+  background: rgb(36, 24, 44);
   color: white;
 }
 
 .logo-and-name{
   padding: 10px;
+  padding-left: 5px;
 }
 
 .side-menu .actions{
   padding: 10px;
+  padding-left: 0px;
 }
 
 .side-menu .action{
   /* margin: 10px 0px; */
   margin: 5px 0px;
-  padding: 5px;
-  padding-left: 0px;
+  padding: 10px 10px;
   cursor: pointer;
   display: flex;
   align-items: center;
   gap: 10px;
+  border-radius: 4px;
 }
 
 .side-menu .action:hover{
   /* back */
+}
+
+div[data-is-selected=true]{
+  background: rgba(255, 255, 255, 0.2);
 }
 
 @media (max-width:450px){
@@ -39,5 +45,11 @@
   }
   span.text{
     display: none
+  }
+  div[data-is-selected=true]{
+    background: none;
+  }
+  .side-menu .actions{
+    padding: 0px;
   }
 }

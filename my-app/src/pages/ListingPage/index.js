@@ -5,6 +5,7 @@ import Audiobook from '../../components/Audiobook'
 import './style.css'
 
 function ListingPage({ history }){
+    document.title = "Discover Audiobook | The Book Hub"
 
     const audiobooks = [
         {
@@ -88,7 +89,6 @@ function ListingPage({ history }){
         <div className="listing-page rest-page">
             <div className="group">
                 <h2 className="heading discover">Discover</h2>
-                <br/>
                 <div className="items audiobooks">
                 {
                         audiobooks.map(

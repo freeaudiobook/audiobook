@@ -6,6 +6,7 @@ import Audiobook from '../../components/Audiobook';
 import './style.css'
 
 function Search({ history }){
+    document.title = "Search Results | The Book Hub"
 
     const audiobooksSearchResults = []
 
