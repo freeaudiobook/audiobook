@@ -3,9 +3,11 @@ package main
 import (
 	"database/sql"
 	"fmt"
+	"io/ioutil"
 	"log"
 	"net/http"
 	"os"
+	"strconv"
 
 	"github.com/extrasalt/audiobook/db"
 	"github.com/google/uuid"
@@ -14,15 +16,27 @@ import (
 
 func createOrUpdateSeek(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
-	newSeek := db.NewSeekPositionParams{
-		SeekPosition: sql.NullInt32{0, true},
+	body, err := string(ioutil.ReadAll(r.Body))
+	if err != nil {
+		http.Error(w, "Seek position not found", http.StatusBadRequest)
+		return
+	}
+
+	seekPosition, err := strconv.Atoi(body)
+	if err != nil {
+		http.Error(w, "Seek position not found", http.StatusBadRequest)
+		return
+	}
+
+	newSeek := db.UpdateSeekPositionParams{
+		SeekPosition: sql.NullInt32{int32(seekPosition), true},
 		BookChapter:  sql.NullString{vars["chapterURL"], true},
 		UserID:       uuid.MustParse(vars["userID"]),
 	}
 
-	err := database.NewSeekPosition(r.Context(), newSeek)
+	err = database.UpdateSeekPosition(r.Context(), newSeek)
 	if err != nil {
-		w.Write([]byte("Unable to write seek postion"))
+		w.Write([]byte("Unable to write seek position"))
 	}
 }
 
