@@ -22,8 +22,23 @@ func New(db DBTX) *Queries {
 func Prepare(ctx context.Context, db DBTX) (*Queries, error) {
 	q := Queries{db: db}
 	var err error
-	if q.newSeekPositionStmt, err = db.PrepareContext(ctx, newSeekPosition); err != nil {
-		return nil, fmt.Errorf("error preparing query NewSeekPosition: %w", err)
+	if q.addBookStmt, err = db.PrepareContext(ctx, addBook); err != nil {
+		return nil, fmt.Errorf("error preparing query AddBook: %w", err)
+	}
+	if q.fetchBooksByGenreStmt, err = db.PrepareContext(ctx, fetchBooksByGenre); err != nil {
+		return nil, fmt.Errorf("error preparing query FetchBooksByGenre: %w", err)
+	}
+	if q.fetchBooksByTitleAndAuthorStmt, err = db.PrepareContext(ctx, fetchBooksByTitleAndAuthor); err != nil {
+		return nil, fmt.Errorf("error preparing query FetchBooksByTitleAndAuthor: %w", err)
+	}
+	if q.getAllBooksStmt, err = db.PrepareContext(ctx, getAllBooks); err != nil {
+		return nil, fmt.Errorf("error preparing query GetAllBooks: %w", err)
+	}
+	if q.getBookByIDStmt, err = db.PrepareContext(ctx, getBookByID); err != nil {
+		return nil, fmt.Errorf("error preparing query GetBookByID: %w", err)
+	}
+	if q.getSeekPositionStmt, err = db.PrepareContext(ctx, getSeekPosition); err != nil {
+		return nil, fmt.Errorf("error preparing query GetSeekPosition: %w", err)
 	}
 	if q.updateSeekPositionStmt, err = db.PrepareContext(ctx, updateSeekPosition); err != nil {
 		return nil, fmt.Errorf("error preparing query UpdateSeekPosition: %w", err)
@@ -33,9 +48,34 @@ func Prepare(ctx context.Context, db DBTX) (*Queries, error) {
 
 func (q *Queries) Close() error {
 	var err error
-	if q.newSeekPositionStmt != nil {
-		if cerr := q.newSeekPositionStmt.Close(); cerr != nil {
-			err = fmt.Errorf("error closing newSeekPositionStmt: %w", cerr)
+	if q.addBookStmt != nil {
+		if cerr := q.addBookStmt.Close(); cerr != nil {
+			err = fmt.Errorf("error closing addBookStmt: %w", cerr)
+		}
+	}
+	if q.fetchBooksByGenreStmt != nil {
+		if cerr := q.fetchBooksByGenreStmt.Close(); cerr != nil {
+			err = fmt.Errorf("error closing fetchBooksByGenreStmt: %w", cerr)
+		}
+	}
+	if q.fetchBooksByTitleAndAuthorStmt != nil {
+		if cerr := q.fetchBooksByTitleAndAuthorStmt.Close(); cerr != nil {
+			err = fmt.Errorf("error closing fetchBooksByTitleAndAuthorStmt: %w", cerr)
+		}
+	}
+	if q.getAllBooksStmt != nil {
+		if cerr := q.getAllBooksStmt.Close(); cerr != nil {
+			err = fmt.Errorf("error closing getAllBooksStmt: %w", cerr)
+		}
+	}
+	if q.getBookByIDStmt != nil {
+		if cerr := q.getBookByIDStmt.Close(); cerr != nil {
+			err = fmt.Errorf("error closing getBookByIDStmt: %w", cerr)
+		}
+	}
+	if q.getSeekPositionStmt != nil {
+		if cerr := q.getSeekPositionStmt.Close(); cerr != nil {
+			err = fmt.Errorf("error closing getSeekPositionStmt: %w", cerr)
 		}
 	}
 	if q.updateSeekPositionStmt != nil {
@@ -80,17 +120,27 @@ func (q *Queries) queryRow(ctx context.Context, stmt *sql.Stmt, query string, ar
 }
 
 type Queries struct {
-	db                     DBTX
-	tx                     *sql.Tx
-	newSeekPositionStmt    *sql.Stmt
-	updateSeekPositionStmt *sql.Stmt
+	db                             DBTX
+	tx                             *sql.Tx
+	addBookStmt                    *sql.Stmt
+	fetchBooksByGenreStmt          *sql.Stmt
+	fetchBooksByTitleAndAuthorStmt *sql.Stmt
+	getAllBooksStmt                *sql.Stmt
+	getBookByIDStmt                *sql.Stmt
+	getSeekPositionStmt            *sql.Stmt
+	updateSeekPositionStmt         *sql.Stmt
 }
 
 func (q *Queries) WithTx(tx *sql.Tx) *Queries {
 	return &Queries{
-		db:                     tx,
-		tx:                     tx,
-		newSeekPositionStmt:    q.newSeekPositionStmt,
-		updateSeekPositionStmt: q.updateSeekPositionStmt,
+		db:                             tx,
+		tx:                             tx,
+		addBookStmt:                    q.addBookStmt,
+		fetchBooksByGenreStmt:          q.fetchBooksByGenreStmt,
+		fetchBooksByTitleAndAuthorStmt: q.fetchBooksByTitleAndAuthorStmt,
+		getAllBooksStmt:                q.getAllBooksStmt,
+		getBookByIDStmt:                q.getBookByIDStmt,
+		getSeekPositionStmt:            q.getSeekPositionStmt,
+		updateSeekPositionStmt:         q.updateSeekPositionStmt,
 	}
 }

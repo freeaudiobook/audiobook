@@ -8,6 +8,18 @@ import (
 	"github.com/google/uuid"
 )
 
+type Book struct {
+	BookID        uuid.UUID      `json:"book_id"`
+	Title         sql.NullString `json:"title"`
+	ImageUrl      sql.NullString `json:"image_url"`
+	LibrivoxUrl   sql.NullString `json:"librivox_url"`
+	Genre         sql.NullString `json:"genre"`
+	Author        sql.NullString `json:"author"`
+	Summary       sql.NullString `json:"summary"`
+	Language      sql.NullString `json:"language"`
+	TotalDuration sql.NullString `json:"total_duration"`
+}
+
 type Playstate struct {
 	UserID       uuid.UUID      `json:"user_id"`
 	BookChapter  sql.NullString `json:"book_chapter"`
