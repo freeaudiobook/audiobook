@@ -6,7 +6,9 @@ CREATE TABLE BOOKS (
     librivox_url string,
     genre string,
     author string,
-    summary string
+    summary string,
+    language string,
+    total_duration string
 )
 
 -- migrate:down
