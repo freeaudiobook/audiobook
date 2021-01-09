@@ -126,6 +126,27 @@ func (q *Queries) GetAllBooks(ctx context.Context) ([]Book, error) {
 	return items, nil
 }
 
+const getBookByID = `-- name: GetBookByID :one
+SELECT book_id, title, image_url, librivox_url, genre, author, summary, language, total_duration FROM  BOOKS where book_id=$1
+`
+
+func (q *Queries) GetBookByID(ctx context.Context, bookID uuid.UUID) (Book, error) {
+	row := q.queryRow(ctx, q.getBookByIDStmt, getBookByID, bookID)
+	var i Book
+	err := row.Scan(
+		&i.BookID,
+		&i.Title,
+		&i.ImageUrl,
+		&i.LibrivoxUrl,
+		&i.Genre,
+		&i.Author,
+		&i.Summary,
+		&i.Language,
+		&i.TotalDuration,
+	)
+	return i, err
+}
+
 const newSeekPosition = `-- name: NewSeekPosition :exec
 INSERT into PLAYSTATE(user_id, book_chapter, seek_position) values($1,$2, $3)
 `

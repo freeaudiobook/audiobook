@@ -13,3 +13,6 @@ SELECT * FROM BOOKS where genre like '%' || $1 || '%' ORDER BY title;
 
 -- name: GetAllBooks :many
 SELECT * FROM BOOKS;
+
+-- name: GetBookByID :one
+SELECT * FROM  BOOKS where book_id=$1;

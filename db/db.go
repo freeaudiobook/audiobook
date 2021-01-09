@@ -31,6 +31,9 @@ func Prepare(ctx context.Context, db DBTX) (*Queries, error) {
 	if q.getAllBooksStmt, err = db.PrepareContext(ctx, getAllBooks); err != nil {
 		return nil, fmt.Errorf("error preparing query GetAllBooks: %w", err)
 	}
+	if q.getBookByIDStmt, err = db.PrepareContext(ctx, getBookByID); err != nil {
+		return nil, fmt.Errorf("error preparing query GetBookByID: %w", err)
+	}
 	if q.newSeekPositionStmt, err = db.PrepareContext(ctx, newSeekPosition); err != nil {
 		return nil, fmt.Errorf("error preparing query NewSeekPosition: %w", err)
 	}
@@ -55,6 +58,11 @@ func (q *Queries) Close() error {
 	if q.getAllBooksStmt != nil {
 		if cerr := q.getAllBooksStmt.Close(); cerr != nil {
 			err = fmt.Errorf("error closing getAllBooksStmt: %w", cerr)
+		}
+	}
+	if q.getBookByIDStmt != nil {
+		if cerr := q.getBookByIDStmt.Close(); cerr != nil {
+			err = fmt.Errorf("error closing getBookByIDStmt: %w", cerr)
 		}
 	}
 	if q.newSeekPositionStmt != nil {
@@ -109,6 +117,7 @@ type Queries struct {
 	fetchBooksByGenreStmt          *sql.Stmt
 	fetchBooksByTitleAndAuthorStmt *sql.Stmt
 	getAllBooksStmt                *sql.Stmt
+	getBookByIDStmt                *sql.Stmt
 	newSeekPositionStmt            *sql.Stmt
 	updateSeekPositionStmt         *sql.Stmt
 }
@@ -120,6 +129,7 @@ func (q *Queries) WithTx(tx *sql.Tx) *Queries {
 		fetchBooksByGenreStmt:          q.fetchBooksByGenreStmt,
 		fetchBooksByTitleAndAuthorStmt: q.fetchBooksByTitleAndAuthorStmt,
 		getAllBooksStmt:                q.getAllBooksStmt,
+		getBookByIDStmt:                q.getBookByIDStmt,
 		newSeekPositionStmt:            q.newSeekPositionStmt,
 		updateSeekPositionStmt:         q.updateSeekPositionStmt,
 	}
