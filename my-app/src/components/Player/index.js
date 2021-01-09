@@ -1,29 +1,36 @@
 import React, { useContext, useEffect } from 'react'
+import ReactAudioPlayer  from 'react-h5-audio-player'
 
 import { GlobalContext } from '../../contexts'
 
+import 'react-h5-audio-player/lib/styles.css';
 import './style.css'
 
 function Player(){
 
     const { currentAudio } = useContext(GlobalContext)
 
-    useEffect(() => {
-        console.log(currentAudio)
-    }, [currentAudio])
-
-    console.log("Rerendered")
+    const storeCurrentSeekTime = (currentAudio, currentTime) => {
+        console.log(currentAudio, Math.floor(currentTime))
+    }
 
     return (
         <div className="player">
-            {currentAudio.chapter?.name || "No song selected yet"}
-            {
-                currentAudio.chapter?.name
-                &&
-                <audio src="http://www.archive.org/download/history_of_astronomy_2101_librivox/historyofastronomy_00_bryant_128kb.mp3" controls>
-                    Your browser does not support the audio element.
-                </audio>
-            }
+            <div className="current-audio-info">
+                <p className="audio-chapter-name">{currentAudio.chapter?.name || ""}</p>
+                <p className="title">{currentAudio?.bookTitle || ""}</p>
+            </div>
+            <div className="audio-player-wrapper">
+                {
+                    currentAudio.chapter?.name
+                    &&
+                    <ReactAudioPlayer 
+                        src={currentAudio.url} 
+                        autoPlay={false} 
+                        onListen={(e) => storeCurrentSeekTime(currentAudio, e.target.currentTime)}
+                    />
+                }
+            </div>
         </div>
     )
 }

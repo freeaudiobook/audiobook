@@ -51,8 +51,9 @@ function Audiobook(){
 
     const updateCurrentAudio = (chapter) => setCurrentAudio(
         {
+            bookTitle: title,
             chapter,
-            url: ""
+            url: "http://www.archive.org/download/history_of_astronomy_2101_librivox/historyofastronomy_00_bryant_128kb.mp3"
         }
     )
 
