@@ -51,6 +51,8 @@ function User(){
                     {nameFromEmail}
                 </div>
             }
+            <br/>
+            <br/>
         </div>
     )
 }
