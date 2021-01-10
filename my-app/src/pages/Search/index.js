@@ -43,7 +43,7 @@ function Search({ history, location }){
             <div className="search-bar">
                 <BsSearch style={{color: "black"}}/>
                 <input 
-                    placeholder="Search for Audiobooks"
+                    placeholder="Search by Title and Author"
                     onChange={onChangeCallback}
                     onKeyDown={onKeyDownCallback}
                 />
