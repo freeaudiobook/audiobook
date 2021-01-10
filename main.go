@@ -42,7 +42,7 @@ func createOrUpdateSeek(w http.ResponseWriter, r *http.Request) {
 
 	err = database.UpdateSeekPosition(r.Context(), newSeek)
 	if err != nil {
-		json.NewEncoder(w).Encode(map[string]string({ "message": "Unable to write seek position"))
+		json.NewEncoder(w).Encode(map[string]string{"message": "Unable to write seek position"})
 	}
 }
 
@@ -140,7 +140,7 @@ func main() {
 	dbName := os.Getenv("DB_NAME")
 
 	psqlInfo := fmt.Sprintf(
-		"host=%s port=%d user=%s password=%s dbname=%s sslmode=require",
+		"host=%s port=%s user=%s password=%s dbname=%s sslmode=require",
 		dbHost,
 		dbPort,
 		dbUser,
