@@ -154,7 +154,7 @@ func main() {
 	serverUrl := os.Getenv("SERVER_HOST")
 
 	goth.UseProviders(
-		google.New(googleClientId, googleClientSecret, fmt.Sprint("%s/auth/google/callback", serverUrl), "email", "profile"),
+		google.New(googleClientId, googleClientSecret, fmt.Sprintf("%s/auth/google/callback", serverUrl), "email", "profile"),
 	)
 
 	dbHost := os.Getenv("DB_HOST")
