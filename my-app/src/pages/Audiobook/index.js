@@ -17,42 +17,43 @@ function Audiobook({ match }){
     const [audiobook, setAudiobook] = useState({
         title: "A Tale of Two Cities",
         author: "William Shakespeare",
+        imgUrl: "https://img.jakpost.net/c/2019/03/02/2019_03_02_66706_1551461528._large.jpg",
         chapters: [
             {
                 name: "Chapter 1",
-                url: "archive.org/chapter1s="
+                url: "http://www.archive.org/download/history_of_astronomy_2101_librivox/historyofastronomy_00_bryant_128kb.mp3"
             },
             {
                 name: "Chapter 2",
-                url: "archive.org/chapter1s="
+                url: "http://www.archive.org/download/history_of_astronomy_2101_librivox/historyofastronomy_00_bryant_128kb.mp3"
             },
             {
                 name: "Chapter 3",
-                url: "archive.org/chapter1s="
+                url: "http://www.archive.org/download/history_of_astronomy_2101_librivox/historyofastronomy_00_bryant_128kb.mp3"
             },
             {
                 name: "Chapter 4",
-                url: "archive.org/chapter1s="
+                url: "http://www.archive.org/download/history_of_astronomy_2101_librivox/historyofastronomy_00_bryant_128kb.mp3"
             },
             {
                 name: "Chapter 5",
-                url: "archive.org/chapter1s="
+                url: "http://www.archive.org/download/history_of_astronomy_2101_librivox/historyofastronomy_00_bryant_128kb.mp3"
             },
             {
                 name: "Chapter 6",
-                url: "archive.org/chapter1s="
+                url: "http://www.archive.org/download/history_of_astronomy_2101_librivox/historyofastronomy_00_bryant_128kb.mp3"
             },
             {
                 name: "Chapter 7",
-                url: "archive.org/chapter1s="
+                url: "http://www.archive.org/download/history_of_astronomy_2101_librivox/historyofastronomy_00_bryant_128kb.mp3"
             },
             {
                 name: "Chapter 8",
-                url: "archive.org/chapter1s="
+                url: "http://www.archive.org/download/history_of_astronomy_2101_librivox/historyofastronomy_00_bryant_128kb.mp3"
             },
             {
                 name: "Chapter 9",
-                url: "archive.org/chapter1s="
+                url: "http://www.archive.org/download/history_of_astronomy_2101_librivox/historyofastronomy_00_bryant_128kb.mp3"
             }
         ]
     })
@@ -60,8 +61,7 @@ function Audiobook({ match }){
     const updateCurrentAudio = (chapter) => setCurrentAudio(
         {
             bookTitle: audiobook.title,
-            chapter,
-            url: "http://www.archive.org/download/history_of_astronomy_2101_librivox/historyofastronomy_00_bryant_128kb.mp3"
+            chapter
         }
     )
 
@@ -79,16 +79,18 @@ function Audiobook({ match }){
     return (
         <div className="audiobook-page rest-page">
             <div className="top" >
-                <div className="bg-img" style={{ background: `url("https://img.jakpost.net/c/2019/03/02/2019_03_02_66706_1551461528._large.jpg")` }}/> 
+                <div className="bg-img" style={{ background: `url("${audiobook.imgUrl}")` }}/> 
                 <div className="cover-art">
-                    <img src="https://img.jakpost.net/c/2019/03/02/2019_03_02_66706_1551461528._large.jpg"/>
+                    <img 
+                    src={audiobook.imgUrl}
+                    />
                 </div>
                 <div className="name-and-author">
                     <h1 className="title">
-                        {title}
+                        {audiobook.title}
                     </h1>
                     <h3 className="author">
-                        By {author}
+                        By {audiobook.author}
                     </h3>
                 </div>
             </div>
@@ -96,12 +98,12 @@ function Audiobook({ match }){
             <h3>Chapters</h3>
             <div className="chapters">
                 {
-                    chapters.map((chapter, _) => 
+                    audiobook.chapters.map((chapter, _) => 
                         <div 
                             className="chapter"
                             onClick={() => updateCurrentAudio(chapter)}
                         >
-                            <img src="https://img.jakpost.net/c/2019/03/02/2019_03_02_66706_1551461528._large.jpg"/>
+                            <img src={audiobook.imgUrl}/>
                             <h4>{chapter.name}</h4>
                         </div>
                     )
