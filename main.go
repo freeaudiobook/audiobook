@@ -71,11 +71,7 @@ func search(w http.ResponseWriter, r *http.Request) {
 	if genre != "" {
 		books, err = database.FetchBooksByGenre(r.Context(), sql.NullString{genre, true})
 	} else {
-		searchParams := db.FetchBooksByTitleAndAuthorParams{
-			Column1: sql.NullString{queryParams.Get("title"), true},
-			Column2: sql.NullString{queryParams.Get("author"), true},
-		}
-		books, err = database.FetchBooksByTitleAndAuthor(r.Context(), searchParams)
+		books, err = database.FetchBooksByTitleOrAuthor(r.Context(), sql.NullString{queryParams.Get("keyword"), true})
 	}
 
 	if err != nil {

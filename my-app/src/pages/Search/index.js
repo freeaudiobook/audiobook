@@ -20,7 +20,7 @@ function Search({ history, location }){
     }
 
     const onKeyDownCallback = (e) => {
-        if(e.key==="Enter") history.push(`search?title=${searchBarValue}`)
+        if(e.key==="Enter") history.push(`search?keyword=${searchBarValue}`)
     }
 
     useEffect(() => {
@@ -28,7 +28,7 @@ function Search({ history, location }){
             setLoadedResults(false)
             const qParamsMap = new URLSearchParams(location.search)
             const searchParams = {
-                title: qParamsMap.get("title")
+                keyword: qParamsMap.get("keyword")
             }
             const response = await search(searchParams)
             setSearchResults(response.data || [])

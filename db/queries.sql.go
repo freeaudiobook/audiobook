@@ -78,17 +78,12 @@ func (q *Queries) FetchBooksByGenre(ctx context.Context, dollar_1 sql.NullString
 	return items, nil
 }
 
-const fetchBooksByTitleAndAuthor = `-- name: FetchBooksByTitleAndAuthor :many
-SELECT book_id, title, image_url, librivox_url, genre, author, summary, language, total_duration FROM BOOKS where title LIKE '%' || $1 || '%' and author LIKE '%' || $2 || '%' ORDER BY title
+const fetchBooksByTitleOrAuthor = `-- name: FetchBooksByTitleOrAuthor :many
+SELECT book_id, title, image_url, librivox_url, genre, author, summary, language, total_duration FROM BOOKS where title LIKE '%' || $1 || '%' or author LIKE '%' || $1 || '%' ORDER BY title
 `
 
-type FetchBooksByTitleAndAuthorParams struct {
-	Column1 sql.NullString `json:"column_1"`
-	Column2 sql.NullString `json:"column_2"`
-}
-
-func (q *Queries) FetchBooksByTitleAndAuthor(ctx context.Context, arg FetchBooksByTitleAndAuthorParams) ([]Book, error) {
-	rows, err := q.query(ctx, q.fetchBooksByTitleAndAuthorStmt, fetchBooksByTitleAndAuthor, arg.Column1, arg.Column2)
+func (q *Queries) FetchBooksByTitleOrAuthor(ctx context.Context, dollar_1 sql.NullString) ([]Book, error) {
+	rows, err := q.query(ctx, q.fetchBooksByTitleOrAuthorStmt, fetchBooksByTitleOrAuthor, dollar_1)
 	if err != nil {
 		return nil, err
 	}

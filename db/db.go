@@ -28,7 +28,7 @@ func Prepare(ctx context.Context, db DBTX) (*Queries, error) {
 	if q.fetchBooksByGenreStmt, err = db.PrepareContext(ctx, fetchBooksByGenre); err != nil {
 		return nil, fmt.Errorf("error preparing query FetchBooksByGenre: %w", err)
 	}
-	if q.fetchBooksByTitleAndAuthorStmt, err = db.PrepareContext(ctx, fetchBooksByTitleAndAuthor); err != nil {
+	if q.fetchBooksByTitleOrAuthorStmt, err = db.PrepareContext(ctx, fetchBooksByTitleOrAuthor); err != nil {
 		return nil, fmt.Errorf("error preparing query FetchBooksByTitleAndAuthor: %w", err)
 	}
 	if q.getAllBooksStmt, err = db.PrepareContext(ctx, getAllBooks); err != nil {
@@ -58,8 +58,8 @@ func (q *Queries) Close() error {
 			err = fmt.Errorf("error closing fetchBooksByGenreStmt: %w", cerr)
 		}
 	}
-	if q.fetchBooksByTitleAndAuthorStmt != nil {
-		if cerr := q.fetchBooksByTitleAndAuthorStmt.Close(); cerr != nil {
+	if q.fetchBooksByTitleOrAuthorStmt != nil {
+		if cerr := q.fetchBooksByTitleOrAuthorStmt.Close(); cerr != nil {
 			err = fmt.Errorf("error closing fetchBooksByTitleAndAuthorStmt: %w", cerr)
 		}
 	}
@@ -120,27 +120,27 @@ func (q *Queries) queryRow(ctx context.Context, stmt *sql.Stmt, query string, ar
 }
 
 type Queries struct {
-	db                             DBTX
-	tx                             *sql.Tx
-	addBookStmt                    *sql.Stmt
-	fetchBooksByGenreStmt          *sql.Stmt
-	fetchBooksByTitleAndAuthorStmt *sql.Stmt
-	getAllBooksStmt                *sql.Stmt
-	getBookByIDStmt                *sql.Stmt
-	getSeekPositionStmt            *sql.Stmt
-	updateSeekPositionStmt         *sql.Stmt
+	db                            DBTX
+	tx                            *sql.Tx
+	addBookStmt                   *sql.Stmt
+	fetchBooksByGenreStmt         *sql.Stmt
+	fetchBooksByTitleOrAuthorStmt *sql.Stmt
+	getAllBooksStmt               *sql.Stmt
+	getBookByIDStmt               *sql.Stmt
+	getSeekPositionStmt           *sql.Stmt
+	updateSeekPositionStmt        *sql.Stmt
 }
 
 func (q *Queries) WithTx(tx *sql.Tx) *Queries {
 	return &Queries{
-		db:                             tx,
-		tx:                             tx,
-		addBookStmt:                    q.addBookStmt,
-		fetchBooksByGenreStmt:          q.fetchBooksByGenreStmt,
-		fetchBooksByTitleAndAuthorStmt: q.fetchBooksByTitleAndAuthorStmt,
-		getAllBooksStmt:                q.getAllBooksStmt,
-		getBookByIDStmt:                q.getBookByIDStmt,
-		getSeekPositionStmt:            q.getSeekPositionStmt,
-		updateSeekPositionStmt:         q.updateSeekPositionStmt,
+		db:                            tx,
+		tx:                            tx,
+		addBookStmt:                   q.addBookStmt,
+		fetchBooksByGenreStmt:         q.fetchBooksByGenreStmt,
+		fetchBooksByTitleOrAuthorStmt: q.fetchBooksByTitleOrAuthorStmt,
+		getAllBooksStmt:               q.getAllBooksStmt,
+		getBookByIDStmt:               q.getBookByIDStmt,
+		getSeekPositionStmt:           q.getSeekPositionStmt,
+		updateSeekPositionStmt:        q.updateSeekPositionStmt,
 	}
 }
