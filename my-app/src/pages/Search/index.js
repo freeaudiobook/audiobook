@@ -24,6 +24,9 @@ function Search({ history, location }){
     }
 
     useEffect(() => {
+        if(searchBarValue === ""){
+            return
+        }
         const func = async() => {
             setLoadedResults(false)
             const qParamsMap = new URLSearchParams(location.search)
@@ -43,7 +46,7 @@ function Search({ history, location }){
             <div className="search-bar">
                 <BsSearch style={{color: "black"}}/>
                 <input 
-                    placeholder="Search by Title and Author"
+                    placeholder="Search by Title or Author"
                     onChange={onChangeCallback}
                     onKeyDown={onKeyDownCallback}
                 />
@@ -52,17 +55,15 @@ function Search({ history, location }){
                 loadedResults && searchResults.length !== 0
                 &&
                 <div className="group">
-                <h2 className="heading discover">Audiobooks</h2>
-                <br/>
-                <div className="items">
-                    {
-                        searchResults.map(
-                            audiobook => <Audiobook {...audiobook} history={history} />
-                        )
-                    }
+                    <h2 className="heading discover">Audiobooks</h2>
+                    <div className="items">
+                        {
+                            searchResults.map(
+                                audiobook => <Audiobook {...audiobook} history={history} />
+                            )
+                        }
+                    </div>
                 </div>
-                
-            </div>
             } 
             {
                 !loadedResults
@@ -74,7 +75,15 @@ function Search({ history, location }){
                 </div>
             }
             {
-                loadedResults && searchResults.length === 0
+                searchBarValue === ""
+                &&
+                <div className="no-results-found">
+                    <h3>Search for an audiobook</h3>
+                    <p>Enter the title or the author of the book</p>
+                </div>
+            }
+            {
+                searchBarValue !== "" && loadedResults && searchResults.length === 0
                 &&
                 <div className="no-results-found">
                     <h3>No results found</h3>
