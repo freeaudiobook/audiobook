@@ -13,7 +13,11 @@ import (
 	"github.com/extrasalt/audiobook/db"
 	"github.com/google/uuid"
 	"github.com/gorilla/mux"
+	"github.com/gorilla/sessions"
 	_ "github.com/lib/pq"
+	"github.com/markbates/goth"
+	"github.com/markbates/goth/gothic"
+	"github.com/markbates/goth/providers/google"
 )
 
 type Books struct {
@@ -133,6 +137,26 @@ func newBook(w http.ResponseWriter, r *http.Request) {
 }
 
 func main() {
+	key := "Secret-session-key" // Replace with your SESSION_SECRET or similar
+	maxAge := 86400 * 30        // 30 days
+	isProd := false             // Set to true when serving over https
+
+	store := sessions.NewCookieStore([]byte(key))
+	store.MaxAge(maxAge)
+	store.Options.Path = "/"
+	store.Options.HttpOnly = true // HttpOnly should always be enabled
+	store.Options.Secure = isProd
+
+	gothic.Store = store
+
+	googleClientId := os.Getenv("GOOGLE_CLIENT_ID")
+	googleClientSecret := os.Getenv("GOOGLE_CLIENT_SECRET")
+	serverUrl := os.Getenv("SERVER_HOST")
+
+	goth.UseProviders(
+		google.New(googleClientId, googleClientSecret, fmt.Sprint("%s/auth/google/callback", serverUrl), "email", "profile"),
+	)
+
 	dbHost := os.Getenv("DB_HOST")
 	dbPort := os.Getenv("DB_PORT")
 	dbUser := os.Getenv("DB_USER")
@@ -167,6 +191,19 @@ func main() {
 	router.PathPrefix("/static").Handler(http.StripPrefix("/static", http.FileServer(http.Dir("./my-app/build/static"))))
 	router.PathPrefix("/assets").Handler(http.StripPrefix("/assets", http.FileServer(http.Dir("./my-app/build/assets"))))
 	router.PathPrefix("/").HandlerFunc(serveUI)
+
+	router.HandleFunc("/auth/{provider}", func(res http.ResponseWriter, req *http.Request) {
+		gothic.BeginAuthHandler(res, req)
+	}).Methods("GET")
+	router.HandleFunc("/auth/{provider}/callback", func(res http.ResponseWriter, req *http.Request) {
+
+		_, err := gothic.CompleteUserAuth(res, req)
+		if err != nil {
+			fmt.Fprintln(res, err)
+			return
+		}
+		http.Redirect(res, req, "/", 302)
+	}).Methods("GET")
 
 	http.Handle("/", router)
 	fmt.Println("Starting on port 8000")
