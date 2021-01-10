@@ -155,9 +155,9 @@ func main() {
 	router.HandleFunc("/api/books/{bookID}", getBookById).Methods("GET")
 	router.HandleFunc("/api/search", search).Methods("GET")
 
-	router.PathPrefix("/app/static").Handler(http.StripPrefix("/app/static", http.FileServer(http.Dir("./my-app/build/static"))))
-	router.PathPrefix("/app/assets").Handler(http.StripPrefix("/app/assets", http.FileServer(http.Dir("./my-app/build/assets"))))
-	router.PathPrefix("/app").HandlerFunc(serveUI)
+	router.PathPrefix("/static").Handler(http.StripPrefix("/static", http.FileServer(http.Dir("./my-app/build/static"))))
+	router.PathPrefix("/assets").Handler(http.StripPrefix("/assets", http.FileServer(http.Dir("./my-app/build/assets"))))
+	router.PathPrefix("/").HandlerFunc(serveUI)
 
 	http.Handle("/", router)
 	fmt.Println("Starting on port 8000")
