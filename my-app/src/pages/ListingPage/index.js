@@ -5,7 +5,7 @@ import Audiobook from '../../components/Audiobook'
 import './style.css'
 
 function ListingPage({ history }){
-    document.title = "Discover Audiobook | The Book Hub"
+    document.title = "Discover Audiobooks | The Book Hub"
 
     const audiobooks = [
         {
