@@ -27,7 +27,7 @@ function Player(){
                     currentAudio.chapter?.name
                     &&
                     <ReactAudioPlayer 
-                        src={currentAudio.url} 
+                        src={currentAudio.chapter.url} 
                         autoPlay={false} 
                         onListen={(e) => storeCurrentSeekTime(currentAudio, e.target.currentTime)}
                         showJumpControls={width > 450}
