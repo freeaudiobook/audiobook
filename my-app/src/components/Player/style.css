@@ -10,9 +10,19 @@
     background: #282828;
     color: white;
 
-    display: flex;
+    display: grid;
+    grid-template-columns: 18% 60% 18%;
     gap: 20px;
     align-items: center;
+}
+
+@media (max-width:800px){
+    .player{
+        grid-template-columns: 25% 75%;
+    }
+    .dummy{
+        display: none;
+    }
 }
 
 .audio-player-wrapper{
@@ -47,6 +57,9 @@
     .rhap_additional-controls{
         display: none;
     }
+    .player{
+        grid-template-columns: 80% 20%;
+    }
   }
 
   .rhap_container {
@@ -65,3 +78,21 @@
   .current-audio-info .title{
       margin-top: 0px;
   }
+
+.audio-player-wrapper{
+    display: flex;
+    justify-content: center;
+}
+
+  .audio-player-wrapper .rhap_container {
+    max-width: 500px;
+  }
+
+.current-audio-info  .audio-chapter-name{
+    max-height: 18px!important;
+    overflow: hidden;
+}
+.current-audio-info  .title{
+    max-height: 18px;
+    overflow: hidden;
+}
