@@ -1,6 +1,7 @@
 -- migrate:up
+CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 CREATE TABLE BOOKS (
-	book_id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+	book_id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
 	title varchar,
     image_url varchar,
     librivox_url varchar,
