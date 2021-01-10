@@ -45,7 +45,6 @@ function ListingPage({ history }){
     return (
         <WrapperPage>
             <div className="listing-page">
-                <User/>
                 <div className="group">
                     <h2 className="heading discover">Genres</h2>
                     <div className="items audiobooks">
