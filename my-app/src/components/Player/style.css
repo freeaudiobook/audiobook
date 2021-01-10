@@ -41,7 +41,7 @@
   background: linear-gradient(45.32deg, #ff45aa 14.7%, #d414f3 77.25%);
 }
 
-.rhap_progress-filled {
+.rhap_download-progress {
   background:  #FFC3E3;
 }
 @media (max-width:450px){
