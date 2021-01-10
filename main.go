@@ -41,7 +41,7 @@ func createOrUpdateSeek(w http.ResponseWriter, r *http.Request) {
 	newSeek := db.UpdateSeekPositionParams{
 		SeekPosition: sql.NullInt32{int32(seekPosition), true},
 		BookChapter:  sql.NullString{vars["chapterURL"], true},
-		UserID:       uuid.MustParse(vars["userID"]),
+		UserID:       sql.NullString{vars["userID"], true},
 	}
 
 	err = database.UpdateSeekPosition(r.Context(), newSeek)
@@ -107,7 +107,7 @@ func getSeek(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 	seekPostionArgs := db.GetSeekPositionParams{
 		BookChapter: sql.NullString{vars["chapterURL"], true},
-		UserID:      uuid.MustParse(vars["userID"]),
+		UserID:      sql.NullString{vars["userID"], true},
 	}
 	seek, err := database.GetSeekPosition(r.Context(), seekPostionArgs)
 

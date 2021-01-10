@@ -21,7 +21,7 @@ type Book struct {
 }
 
 type Playstate struct {
-	UserID       uuid.UUID      `json:"user_id"`
+	UserID       sql.NullString `json:"user_id"`
 	BookChapter  sql.NullString `json:"book_chapter"`
 	SeekPosition sql.NullInt32  `json:"seek_position"`
 }

@@ -183,7 +183,7 @@ SELECT seek_position from PLAYSTATE where user_id=$1 AND book_chapter=$2
 `
 
 type GetSeekPositionParams struct {
-	UserID      uuid.UUID      `json:"user_id"`
+	UserID      sql.NullString `json:"user_id"`
 	BookChapter sql.NullString `json:"book_chapter"`
 }
 
@@ -200,7 +200,7 @@ ON CONFLICT (user_id, book_chapter) DO UPDATE SET seek_position = $3
 `
 
 type UpdateSeekPositionParams struct {
-	UserID       uuid.UUID      `json:"user_id"`
+	UserID       sql.NullString `json:"user_id"`
 	BookChapter  sql.NullString `json:"book_chapter"`
 	SeekPosition sql.NullInt32  `json:"seek_position"`
 }
