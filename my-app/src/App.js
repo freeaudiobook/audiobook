@@ -17,9 +17,11 @@ import './App.css';
 function App() {
 
   const [currentAudio, setCurrentAudio] = useState({})
+  const [user, setUser] = useState("")
 
   const contextValue = {
-    currentAudio, setCurrentAudio
+    currentAudio, setCurrentAudio,
+    user, setUser
   }
 
   return (

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 
+import WrapperPage from '../../components/WrapperPage';
 import Audiobook from '../../components/Audiobook';
 
 import { search } from '../../utils/api'
@@ -26,6 +27,7 @@ function Search({ history, match }){
     }, [genre]) 
 
     return (
+        <WrapperPage>
         <div className="search-page rest-page">
             <h2>{genre} Audiobooks</h2>
             {
@@ -59,6 +61,7 @@ function Search({ history, match }){
                 </div>
             }
         </div>
+       </WrapperPage>
     )
 }
 

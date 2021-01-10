@@ -4,17 +4,34 @@ import ReactAudioPlayer  from 'react-h5-audio-player'
 import { GlobalContext } from '../../contexts'
 import useWindowDimensions from '../../customHooks/useWindowDimensions'
 
+import { updateSeekTime, getSeek  } from '../../utils/api'
+
 import 'react-h5-audio-player/lib/styles.css';
 import './style.css'
 
 function Player(){
 
-    const { currentAudio } = useContext(GlobalContext)
+    const { currentAudio, user } = useContext(GlobalContext)
     const { width, height } = useWindowDimensions()
 
-    const storeCurrentSeekTime = (currentAudio, currentTime) => {
-        console.log(currentAudio, Math.floor(currentTime))
+    const storeCurrentSeekTime = async(currentAudio, currentTime) => {
+        const encodedChapterURL = btoa(currentAudio.chapter?.Link)
+        const currentTimeInSeconds = Math.floor(currentTime)
+        console.log(user, encodedChapterURL, currentTimeInSeconds)
+        const response = await updateSeekTime(user, encodedChapterURL, currentTimeInSeconds)
     }
+
+    useEffect(() => {
+        if(!user){
+            return
+        }
+        const func  = async() => {
+            // const encodedChapterURL = btoa(currentAudio.chapter?.Link)
+            // const response = await getSeek(user, encodedChapterURL)
+            // console.log(response.data)
+        }
+        func()
+    }, [currentAudio, user])
 
     return (
         <div className="player">
@@ -29,6 +46,7 @@ function Player(){
                     <ReactAudioPlayer 
                         src={currentAudio.chapter?.Link} 
                         autoPlay={false} 
+                        listenInterval={3000}
                         onListen={(e) => storeCurrentSeekTime(currentAudio, e.target.currentTime)}
                         showJumpControls={width > 450}
                         showSkipControls={width > 450}

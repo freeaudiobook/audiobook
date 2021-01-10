@@ -1,5 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react'
 
+import WrapperPage from '../../components/WrapperPage';
 import Audiobook from '../../components/Audiobook'
 import User from '../../components/User'
 
@@ -42,47 +43,49 @@ function ListingPage({ history }){
     }, [])
 
     return (
-        <div className="listing-page rest-page">
-            <User/>
-            <div className="group">
-                <h2 className="heading discover">Genres</h2>
-                <div className="items audiobooks">
-                {
-                    genres.map(
-                        genre => 
-                            <div className="item" onClick={() => history.push(`/genre/${genre}`)}>
-                                <h3>{genre}</h3>
-                            </div>
-                    )
-                }
-                </div>
-            </div>
-            <br/>
-            {
-                loaded 
-                && 
+        <WrapperPage>
+            <div className="listing-page">
+                <User/>
                 <div className="group">
-                    <h2 className="heading discover">Explore</h2>
+                    <h2 className="heading discover">Genres</h2>
                     <div className="items audiobooks">
                     {
-                        items.map(
-                            audiobook => 
-                                <Audiobook {...audiobook} history={history} />
+                        genres.map(
+                            genre => 
+                                <div className="item" onClick={() => history.push(`/genre/${genre}`)}>
+                                    <h3>{genre}</h3>
+                                </div>
                         )
                     }
                     </div>
                 </div>
-            }
-            {
-                !loaded
-                &&
-                <div class="loading">
-                    <div></div>
-                    <div></div>
-                    <div></div>
-                </div>
-            }
-        </div>
+                <br/>
+                {
+                    loaded 
+                    && 
+                    <div className="group">
+                        <h2 className="heading discover">Explore</h2>
+                        <div className="items audiobooks">
+                        {
+                            items.map(
+                                audiobook => 
+                                    <Audiobook {...audiobook} history={history} />
+                            )
+                        }
+                        </div>
+                    </div>
+                }
+                {
+                    !loaded
+                    &&
+                    <div class="loading">
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                    </div>
+                }
+            </div>
+        </WrapperPage>
     )
 }
 

@@ -46,7 +46,7 @@ div[data-is-selected=true]{
 .logo{
   filter: grayscale(0);
   width: 50px;
-  border-radius: 50%;
+  /* border-radius: 50%; */
 }
 
 .logo-and-name{

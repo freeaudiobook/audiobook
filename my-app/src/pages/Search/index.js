@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { BsSearch } from 'react-icons/bs';
 
+import WrapperPage from '../../components/WrapperPage';
 import Audiobook from '../../components/Audiobook';
 
 import { search } from '../../utils/api'
@@ -37,7 +38,8 @@ function Search({ history, location }){
     }, [location]) 
 
     return (
-        <div className="search-page rest-page">
+        <WrapperPage>
+        <div className="search-page">
             <div className="search-bar">
                 <BsSearch style={{color: "black"}}/>
                 <input 
@@ -80,6 +82,7 @@ function Search({ history, location }){
                 </div>
             }
         </div>
+        </WrapperPage>
     )
 }
 

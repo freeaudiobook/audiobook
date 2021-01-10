@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from 'react'
 
 import { GlobalContext } from '../../contexts'
 
+import WrapperPage from '../../components/WrapperPage';
 import { readBook } from '../../utils/api'
 
 import './style.css'
@@ -48,6 +49,7 @@ function Audiobook({ match }) {
     }, [audiboookId])
 
     return (
+        <WrapperPage>
         <div className="audiobook-page rest-page">
             {
                 loaded
@@ -96,6 +98,7 @@ function Audiobook({ match }) {
                 </div>
             }
         </div>
+        </WrapperPage>
     )
 }
 
