@@ -19,7 +19,7 @@ function Player(){
     return (
         <div className="player">
             <div className="current-audio-info">
-                <p className="audio-chapter-name">{currentAudio.chapter?.name || ""}</p>
+                <p className="audio-chapter-name">{currentAudio.chapter?.Title || ""}</p>
                 <p className="title">{currentAudio?.bookTitle || ""}</p>
             </div>
             <div className="audio-player-wrapper">

@@ -6,18 +6,34 @@ import { listAllBooks } from '../../utils/api'
 import './style.css'
 
 function ListingPage({ history }){
-    document.title = "Discover Audiobooks | The Book Hub"
+    document.title = "Curated Audiobooks | The Book Hub"
 
     const [items, setItems] = useState([])
-    const [pageLoaded, setPageLoaded] = useState(false)
+    const [loaded, setLoaded] = useState(false)
+
+    const genres = [
+        "Action & Adventure Fiction",
+        "Romance",
+        "Horror & Supernatural Fiction",
+        "Comedy",
+        "Tragedy",
+        "General Fiction",
+        "Humorous Fiction",
+        "Children's Fiction",
+        "Plays",
+        "Dramatic Readings",
+        "Self-Help",
+        "Nautical & Marine Fiction",
+    ]
 
     useEffect(() => {
         const func = async() => {
             const response = await listAllBooks()
-            setPageLoaded(true)
+            setLoaded(true)
             if(response.status !== 200){
                 return
             }
+            console.log(response.data.books)
             setItems(response.data.books)
         }
         func()
@@ -25,11 +41,25 @@ function ListingPage({ history }){
 
     return (
         <div className="listing-page rest-page">
+            <div className="group">
+                <h2 className="heading discover">Genres</h2>
+                <div className="items audiobooks">
+                {
+                    genres.map(
+                        genre => 
+                            <div className="item" onClick={() => history.push(`/genre/${genre}`)}>
+                                <h3>{genre}</h3>
+                            </div>
+                    )
+                }
+                </div>
+            </div>
+            <br/>
             {
-                pageLoaded 
+                loaded 
                 && 
                 <div className="group">
-                    <h2 className="heading discover">Discover</h2>
+                    <h2 className="heading discover">Explore</h2>
                     <div className="items audiobooks">
                     {
                         items.map(
@@ -38,6 +68,15 @@ function ListingPage({ history }){
                         )
                     }
                     </div>
+                </div>
+            }
+            {
+                !loaded
+                &&
+                <div class="loading">
+                    <div></div>
+                    <div></div>
+                    <div></div>
                 </div>
             }
         </div>

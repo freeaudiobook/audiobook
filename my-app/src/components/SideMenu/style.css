@@ -24,6 +24,10 @@
   align-items: center;
   gap: 10px;
   border-radius: 4px;
+  color: #b3b3b3;
+  transition-property: color;
+  transition-duration: .2s;
+  transition-timing-function: linear;
 }
 
 .side-menu .action:hover{
@@ -32,6 +36,11 @@
 
 div[data-is-selected=true]{
   background: rgba(255, 255, 255, 0.2);
+}
+
+
+.side-menu .action[data-is-selected=true], .side-menu .action:hover{
+  color: white;
 }
 
 .logo{
@@ -69,4 +78,8 @@ div[data-is-selected=true]{
   .side-menu .actions{
     padding: 0px;
   }
+  .side-menu{
+    border-top: 1px solid rgba(255,255,255,0.5);
+  }
 }
+

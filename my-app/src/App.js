@@ -4,6 +4,7 @@ import { BrowserRouter, Route, Switch } from 'react-router-dom'
 import SideMenu from './components/SideMenu'
 import Player from './components/Player'
 
+import GenreAudiobooks from './pages/GenreAudiobooks'
 import ListingPage from './pages/ListingPage'
 import Audiobook from './pages/Audiobook'
 import Search from './pages/Search'
@@ -26,6 +27,7 @@ function App() {
             <Switch>
                 <GlobalContext.Provider value={contextValue}>
                   <Route path="/" component={SideMenu} />
+                    <Route exact path="/genre/:genre" component={GenreAudiobooks}/>
                       <Route exact path="/search" component={Search}/>
                       <Route exact path="/audiobook/" component={Audiobook}/>
                       <Route exact path="/audiobook/:id" component={Audiobook}/>

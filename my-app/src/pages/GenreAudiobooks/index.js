@@ -1,57 +1,37 @@
 import React, { useEffect, useState } from 'react'
-import { BsSearch } from 'react-icons/bs';
 
 import Audiobook from '../../components/Audiobook';
 
 import { search } from '../../utils/api'
 
-import './style.css'
-
-function Search({ history, location }){
+function Search({ history, match }){
     document.title = "Search Results | The Book Hub"
 
-    const [searchBarValue, setSearchBarValue] = useState("")
+    const genre = match.params.genre
+
     const [loadedResults, setLoadedResults] = useState(true)
     const [searchResults, setSearchResults] = useState([])
-
-    const onChangeCallback = (e) => {
-        setSearchBarValue(e.target.value)
-    }
-
-    const onKeyDownCallback = (e) => {
-        if(e.key==="Enter") history.push(`search?title=${searchBarValue}`)
-    }
 
     useEffect(() => {
         const func = async() => {
             setLoadedResults(false)
-            const qParamsMap = new URLSearchParams(location.search)
             const searchParams = {
-                title: qParamsMap.get("title")
+                genre
             }
             const response = await search(searchParams)
             setSearchResults(response.data || [])
             setLoadedResults(true)
         } 
         func()
-    }, [location]) 
+    }, [genre]) 
 
     return (
         <div className="search-page rest-page">
-            <div className="search-bar">
-                <BsSearch style={{color: "black"}}/>
-                <input 
-                    placeholder="Search for Audiobooks"
-                    onChange={onChangeCallback}
-                    onKeyDown={onKeyDownCallback}
-                />
-            </div>
+            <h2>{genre} Audiobooks</h2>
             {
                 loadedResults && searchResults.length !== 0
                 &&
                 <div className="group">
-                <h2 className="heading discover">Audiobooks</h2>
-                <br/>
                 <div className="items">
                     {
                         searchResults.map(
@@ -59,7 +39,6 @@ function Search({ history, location }){
                         )
                     }
                 </div>
-                
             </div>
             } 
             {
