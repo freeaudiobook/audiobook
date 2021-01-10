@@ -2,6 +2,7 @@ package main
 
 import (
 	"database/sql"
+	b64 "encoding/base64"
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
@@ -38,16 +39,25 @@ func createOrUpdateSeek(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	chapterURL, err := b64.StdEncoding.DecodeString(vars["chapterURL"])
+	if err != nil {
+		json.NewEncoder(w).Encode(map[string]string{"message": "There was an issue with the chapterURL"})
+		return
+	}
+
 	newSeek := db.UpdateSeekPositionParams{
-		SeekPosition: sql.NullInt32{int32(seekPosition), true},
-		BookChapter:  sql.NullString{vars["chapterURL"], true},
-		UserID:       sql.NullString{vars["userID"], true},
+		SeekPosition: sql.NullInt32{Int32: int32(seekPosition), Valid: true},
+		BookChapter:  sql.NullString{String: string(chapterURL), Valid: true},
+		UserID:       sql.NullString{String: vars["userID"], Valid: true},
 	}
 
 	err = database.UpdateSeekPosition(r.Context(), newSeek)
 	if err != nil {
 		json.NewEncoder(w).Encode(map[string]string{"message": "Unable to write seek position"})
+		return
 	}
+
+	json.NewEncoder(w).Encode(map[string]string{"message": "Wrote seek position"})
 }
 
 func search(w http.ResponseWriter, r *http.Request) {
@@ -105,9 +115,16 @@ func getBookById(w http.ResponseWriter, r *http.Request) {
 func getSeek(w http.ResponseWriter, r *http.Request) {
 	w.Header().Add("Content-Type", "application/json")
 	vars := mux.Vars(r)
+
+	chapterURL, err := b64.StdEncoding.DecodeString(vars["chapterURL"])
+	if err != nil {
+		json.NewEncoder(w).Encode(map[string]string{"message": "There was an issue with the chapterURL"})
+		return
+	}
+
 	seekPostionArgs := db.GetSeekPositionParams{
-		BookChapter: sql.NullString{vars["chapterURL"], true},
-		UserID:      sql.NullString{vars["userID"], true},
+		BookChapter: sql.NullString{String: string(chapterURL), Valid: true},
+		UserID:      sql.NullString{String: vars["userID"], Valid: true},
 	}
 	seek, err := database.GetSeekPosition(r.Context(), seekPostionArgs)
 
