@@ -187,11 +187,6 @@ func main() {
 	router.HandleFunc("/api/books", newBook).Methods("POST")
 	router.HandleFunc("/api/books/{bookID}", getBookById).Methods("GET")
 	router.HandleFunc("/api/search", search).Methods("GET")
-
-	router.PathPrefix("/static").Handler(http.StripPrefix("/static", http.FileServer(http.Dir("./my-app/build/static"))))
-	router.PathPrefix("/assets").Handler(http.StripPrefix("/assets", http.FileServer(http.Dir("./my-app/build/assets"))))
-	router.PathPrefix("/").HandlerFunc(serveUI)
-
 	router.HandleFunc("/auth/{provider}", func(res http.ResponseWriter, req *http.Request) {
 		gothic.BeginAuthHandler(res, req)
 	}).Methods("GET")
@@ -204,6 +199,10 @@ func main() {
 		}
 		http.Redirect(res, req, "/", 302)
 	}).Methods("GET")
+
+	router.PathPrefix("/static").Handler(http.StripPrefix("/static", http.FileServer(http.Dir("./my-app/build/static"))))
+	router.PathPrefix("/assets").Handler(http.StripPrefix("/assets", http.FileServer(http.Dir("./my-app/build/assets"))))
+	router.PathPrefix("/").HandlerFunc(serveUI)
 
 	http.Handle("/", router)
 	fmt.Println("Starting on port 8000")
