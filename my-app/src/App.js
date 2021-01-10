@@ -21,7 +21,7 @@ function App() {
   }
 
   return (
-    <div className="main-container" data-show-player={Boolean(currentAudio?.chapter?.name)}>
+    <div className="main-container" data-show-player={Boolean(currentAudio?.chapter?.Link)}>
       <BrowserRouter>
             <Switch>
                 <GlobalContext.Provider value={contextValue}>

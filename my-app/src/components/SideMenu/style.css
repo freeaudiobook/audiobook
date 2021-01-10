@@ -34,6 +34,23 @@ div[data-is-selected=true]{
   background: rgba(255, 255, 255, 0.2);
 }
 
+.logo{
+  filter: grayscale(0);
+  width: 50px;
+  border-radius: 50%;
+}
+
+.logo-and-name{
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.org-name{
+  letter-spacing: -1px;
+  font-size: 22px;
+}
+
 @media (max-width:450px){
   .logo-and-name{
     display: none;
@@ -52,21 +69,4 @@ div[data-is-selected=true]{
   .side-menu .actions{
     padding: 0px;
   }
-}
-
-.logo{
-  filter: grayscale(0);
-  width: 50px;
-  border-radius: 50%;
-}
-
-.logo-and-name{
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.org-name{
-  letter-spacing: -1px;
-  font-size: 22px;
 }

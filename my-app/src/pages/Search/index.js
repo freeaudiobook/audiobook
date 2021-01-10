@@ -19,17 +19,21 @@ function Search({ history, location }){
     }
 
     const onKeyDownCallback = (e) => {
-        if(e.key==="Enter") history.push(`search?name=${searchBarValue}`)
+        if(e.key==="Enter") history.push(`search?title=${searchBarValue}`)
     }
 
     useEffect(() => {
-        setLoadedResults(false)
-        const qParamsMap = new URLSearchParams(location.search)
-        const searchParams = {
-            name: qParamsMap.get("name")
-        }
-        // const results =  await search(params)
-        // setLoadedResults(true)
+        const func = async() => {
+            setLoadedResults(false)
+            const qParamsMap = new URLSearchParams(location.search)
+            const searchParams = {
+                title: qParamsMap.get("title")
+            }
+            const response = await search(searchParams)
+            setSearchResults(response.data)
+            setLoadedResults(true)
+        } 
+        func()
     }, [location]) 
 
     return (

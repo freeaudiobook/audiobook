@@ -106,23 +106,23 @@ body{
 }
 
 .group .items{
-  grid-template-columns: repeat(5, 1fr);
+  grid-template-columns: repeat(5, 19%);
 }
 
 @media (max-width:1280px){
   .group .items{
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(4, 24%);
   }
 }
 
 @media (max-width:800px){
   .group .items{
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(3, 32%);
   }
 }
 
 @media (max-width:600px){
   .group .items{
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(2, 49%);
   }
 }

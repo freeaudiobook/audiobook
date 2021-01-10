@@ -1,7 +1,7 @@
 import axios from 'axios'
 
-const apiPreifx = ""
+const apiPreifx = "/api"
 
 export const listAllBooks = () => axios.get(`${apiPreifx}/books`)
 export const readBook = (id) => axios.get(`${apiPreifx}/books/${id}`)
-export const search = (params) => axios.get(`${apiPreifx}/books`, { params })
+export const search = (params) => axios.get(`${apiPreifx}/search`, { params })

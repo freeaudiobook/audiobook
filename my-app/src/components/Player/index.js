@@ -24,10 +24,10 @@ function Player(){
             </div>
             <div className="audio-player-wrapper">
                 {
-                    currentAudio.chapter?.name
+                    currentAudio.chapter?.Title
                     &&
                     <ReactAudioPlayer 
-                        src={currentAudio.chapter.url} 
+                        src={currentAudio.chapter?.Link} 
                         autoPlay={false} 
                         onListen={(e) => storeCurrentSeekTime(currentAudio, e.target.currentTime)}
                         showJumpControls={width > 450}
