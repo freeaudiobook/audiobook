@@ -194,20 +194,28 @@ func main() {
 	}).Methods("GET")
 
 	router.HandleFunc("/currentuser", func(res http.ResponseWriter, req *http.Request) {
+		c, err := req.Cookie("email")
+		if err != nil {
+			res.Write([]byte("cant get user"))
+		}
+		res.Write([]byte(c.Value))
+
+	}).Methods("GET")
+	router.HandleFunc("/auth/{provider}/callback", func(res http.ResponseWriter, req *http.Request) {
+
 		user, err := gothic.CompleteUserAuth(res, req)
 		if err != nil {
 			fmt.Fprintln(res, err)
 			return
 		}
-		json.NewEncoder(res).Encode(user)
-	}).Methods("GET")
-	router.HandleFunc("/auth/{provider}/callback", func(res http.ResponseWriter, req *http.Request) {
 
-		_, err := gothic.CompleteUserAuth(res, req)
-		if err != nil {
-			fmt.Fprintln(res, err)
-			return
+		cookie := http.Cookie{
+			Name:  "email",
+			Value: user.Email,
+			Path:  "/",
 		}
+
+		http.SetCookie(res, &cookie)
 		http.Redirect(res, req, "/", 302)
 	}).Methods("GET")
 
