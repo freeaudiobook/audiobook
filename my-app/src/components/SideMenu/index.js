@@ -12,7 +12,7 @@ function SideMenu({ history, location }) {
         <div className="side-menu">
             <div className="logo-and-name">
                 <img 
-                    src="/assets/logo.png"
+                    src="/assets/new-logo.svg"
                     className="logo"
                 />
                 <h3 className="org-name">The Book Hub</h3>
