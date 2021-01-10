@@ -1,6 +1,6 @@
 -- migrate:up
 CREATE TABLE BOOKS (
-	book_id UUID,
+	book_id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
 	title string,
     image_url string,
     librivox_url string,
