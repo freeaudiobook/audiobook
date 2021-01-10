@@ -16,6 +16,10 @@ import (
 	_ "github.com/lib/pq"
 )
 
+type Books struct {
+	Books []db.Book `json:"books"`
+}
+
 func createOrUpdateSeek(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 	body, err := ioutil.ReadAll(r.Body)
@@ -38,7 +42,7 @@ func createOrUpdateSeek(w http.ResponseWriter, r *http.Request) {
 
 	err = database.UpdateSeekPosition(r.Context(), newSeek)
 	if err != nil {
-		w.Write([]byte("Unable to write seek position"))
+		json.NewEncoder(w).Encode(map[string]string({ "message": "Unable to write seek position"))
 	}
 }
 
@@ -47,13 +51,15 @@ func search(w http.ResponseWriter, r *http.Request) {
 
 	var books []db.Book
 	var err error
+	w.Header().Add("Content-Type", "application/json")
+	genre := queryParams.Get("genre")
 
-	if genre, found := queryParams["genre"]; found {
-		books, err = database.FetchBooksByGenre(r.Context(), sql.NullString{genre[0], true})
+	if genre != "" {
+		books, err = database.FetchBooksByGenre(r.Context(), sql.NullString{genre, true})
 	} else {
 		searchParams := db.FetchBooksByTitleAndAuthorParams{
-			Column1: sql.NullString{queryParams["title"][0], true},
-			Column2: sql.NullString{queryParams["author"][0], true},
+			Column1: sql.NullString{queryParams.Get("title"), true},
+			Column2: sql.NullString{queryParams.Get("author"), true},
 		}
 		books, err = database.FetchBooksByTitleAndAuthor(r.Context(), searchParams)
 	}
@@ -69,19 +75,20 @@ var database *db.Queries
 
 func listAllBooks(w http.ResponseWriter, r *http.Request) {
 	books, err := database.GetAllBooks(r.Context())
-
+	w.Header().Add("Content-Type", "application/json")
 	if err != nil {
+		fmt.Println(err)
 		json.NewEncoder(w).Encode(map[string]string{"message": "unable to find books"})
 	}
 
-	json.NewEncoder(w).Encode(books)
+	json.NewEncoder(w).Encode(Books{Books: books})
 }
 
 func getBookById(w http.ResponseWriter, r *http.Request) {
+	w.Header().Add("Content-Type", "application/json")
 	vars := mux.Vars(r)
 	bookID, _ := uuid.Parse(vars["bookID"])
 	book, err := database.GetBookByID(r.Context(), bookID)
-
 	if err != nil {
 		json.NewEncoder(w).Encode(map[string]string{"message": "unable to find books"})
 	}
@@ -90,8 +97,8 @@ func getBookById(w http.ResponseWriter, r *http.Request) {
 }
 
 func getSeek(w http.ResponseWriter, r *http.Request) {
+	w.Header().Add("Content-Type", "application/json")
 	vars := mux.Vars(r)
-
 	seekPostionArgs := db.GetSeekPositionParams{
 		BookChapter: sql.NullString{vars["chapterURL"], true},
 		UserID:      uuid.MustParse(vars["userID"]),
@@ -99,6 +106,7 @@ func getSeek(w http.ResponseWriter, r *http.Request) {
 	seek, err := database.GetSeekPosition(r.Context(), seekPostionArgs)
 
 	if err != nil {
+		fmt.Println(err)
 		json.NewEncoder(w).Encode(map[string]string{"message": "unable to find books"})
 	}
 
@@ -107,7 +115,7 @@ func getSeek(w http.ResponseWriter, r *http.Request) {
 }
 
 func newBook(w http.ResponseWriter, r *http.Request) {
-
+	w.Header().Add("Content-Type", "application/json")
 	var bookParams db.AddBookParams
 	b, err := ioutil.ReadAll(r.Body)
 	if err != nil {
