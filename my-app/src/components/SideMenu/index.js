@@ -11,7 +11,11 @@ function SideMenu({ history, location }) {
     return (
         <div className="side-menu">
             <div className="logo-and-name">
-                <h3>The Book Hub</h3>
+                <img 
+                    src="/assets/logo.png"
+                    className="logo"
+                />
+                <h3 className="org-name">The Book Hub</h3>
             </div>
             <div className="actions">
                 <div 

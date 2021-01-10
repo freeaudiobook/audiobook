@@ -53,3 +53,20 @@ div[data-is-selected=true]{
     padding: 0px;
   }
 }
+
+.logo{
+  filter: grayscale(0);
+  width: 50px;
+  border-radius: 50%;
+}
+
+.logo-and-name{
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.org-name{
+  letter-spacing: -1px;
+  font-size: 22px;
+}
