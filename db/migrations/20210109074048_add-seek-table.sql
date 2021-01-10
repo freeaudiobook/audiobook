@@ -1,7 +1,7 @@
 -- migrate:up
 CREATE TABLE PLAYSTATE (
 	user_id UUID,
-	book_chapter string,
+	book_chapter varchar,
 	seek_position int
 )
 
