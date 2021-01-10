@@ -1,6 +1,8 @@
 import React, { useContext, useEffect, useState } from 'react'
 
 import Audiobook from '../../components/Audiobook'
+import User from '../../components/User'
+
 import { listAllBooks } from '../../utils/api'
 
 import './style.css'
@@ -41,6 +43,7 @@ function ListingPage({ history }){
 
     return (
         <div className="listing-page rest-page">
+            <User/>
             <div className="group">
                 <h2 className="heading discover">Genres</h2>
                 <div className="items audiobooks">

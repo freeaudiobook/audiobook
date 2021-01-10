@@ -1,0 +1,12 @@
+.user{
+    display: flex;
+    flex-direction: row-reverse;
+}
+
+.user .login-btn{
+    padding: 6px 12px;
+    font-size: 15px;
+    font-weight: bold;
+    background: black;
+    border-radius: 20px;
+}

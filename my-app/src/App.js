@@ -3,6 +3,7 @@ import { BrowserRouter, Route, Switch } from 'react-router-dom'
 
 import SideMenu from './components/SideMenu'
 import Player from './components/Player'
+import User from './components/User'
 
 import GenreAudiobooks from './pages/GenreAudiobooks'
 import ListingPage from './pages/ListingPage'
