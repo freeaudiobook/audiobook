@@ -148,12 +148,16 @@ func main() {
 	database = db.New(c)
 	router := mux.NewRouter()
 
-	router.HandleFunc("/user/{userID}/bookchapter/{chapterURL}/seek", createOrUpdateSeek).Methods("POST")
-	router.HandleFunc("/user/{userID}/bookchapter/{chapterURL}/seek", getSeek).Methods("GET")
-	router.HandleFunc("/books", listAllBooks).Methods("GET")
-	router.HandleFunc("/books", newBook).Methods("POST")
-	router.HandleFunc("/books/{bookID}", getBookById).Methods("GET")
-	router.HandleFunc("/search", search).Methods("GET")
+	router.HandleFunc("/api/user/{userID}/bookchapter/{chapterURL}/seek", createOrUpdateSeek).Methods("POST")
+	router.HandleFunc("/api/user/{userID}/bookchapter/{chapterURL}/seek", getSeek).Methods("GET")
+	router.HandleFunc("/api/books", listAllBooks).Methods("GET")
+	router.HandleFunc("/api/books", newBook).Methods("POST")
+	router.HandleFunc("/api/books/{bookID}", getBookById).Methods("GET")
+	router.HandleFunc("/api/search", search).Methods("GET")
+
+	router.PathPrefix("/app/static").Handler(http.StripPrefix("/app/static", http.FileServer(http.Dir("./my-app/build/static"))))
+	router.PathPrefix("/app/assets").Handler(http.StripPrefix("/app/assets", http.FileServer(http.Dir("./my-app/build/assets"))))
+	router.PathPrefix("/app").HandlerFunc(serveUI)
 
 	http.Handle("/", router)
 	fmt.Println("Starting on port 8000")
@@ -161,4 +165,8 @@ func main() {
 	if err != nil {
 		panic(err)
 	}
+}
+
+func serveUI(w http.ResponseWriter, r *http.Request) {
+	http.ServeFile(w, r, "./my-app/build/index.html")
 }
