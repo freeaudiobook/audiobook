@@ -22,7 +22,7 @@ function App() {
 
   return (
     <div className="main-container" data-show-player={Boolean(currentAudio?.chapter?.name)}>
-      <BrowserRouter>
+      <BrowserRouter basename="/app">
             <Switch>
                 <GlobalContext.Provider value={contextValue}>
                   <Route path="/" component={SideMenu} />
