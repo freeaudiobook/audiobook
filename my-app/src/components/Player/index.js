@@ -17,23 +17,21 @@ function Player(){
     const { width, height } = useWindowDimensions()
 
     const storeCurrentSeekTime = async(currentAudio, currentTime) => {
-        // const encodedChapterURL = btoa(currentAudio.chapter?.Link)
-        // const currentTimeInSeconds = Math.floor(currentTime)
-        // console.log(user, encodedChapterURL, currentTimeInSeconds)
-        // const response = await updateSeekTime(user, encodedChapterURL, currentTimeInSeconds)
-    }
+        const encodedChapterURL = btoa(currentAudio.chapter?.Link)
+        const currentTimeInSeconds = Math.floor(currentTime)
+        const response = await updateSeekTime(user, encodedChapterURL, currentTimeInSeconds)
+    }   
 
     useEffect(() => {
         if(!user){
             return
         }
         const func  = async() => {
-            // const encodedChapterURL = btoa(currentAudio.chapter?.Link)
-            // const response = await getSeek(user, encodedChapterURL)
-            // console.log(response.data)
-            // if(playerRef?.current?.audio?.current){
-            //     playerRef.current.audio.current.currentTime = response.data || 0
-            // }
+            const encodedChapterURL = btoa(currentAudio.chapter?.Link)
+            const response = await getSeek(user, encodedChapterURL)
+            if(playerRef?.current?.audio?.current){
+                playerRef.current.audio.current.currentTime = response.data || 0
+            }
         }
         func()
     }, [currentAudio, user])

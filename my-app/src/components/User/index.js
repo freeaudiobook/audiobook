@@ -17,13 +17,15 @@ function User(){
         const func = async() => {
             const [response, err] = await handlePromise(getCurrentUser())
             
+            // setUser("example@abcd.com")
+
             if(err){
                 console.log(err)
                 return
             }
+
             console.log(response.data)
             setUser(response.data)
-            // setUser("example@abcd.com")
         }
         func()
     }, [])
