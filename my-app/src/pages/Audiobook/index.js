@@ -37,8 +37,10 @@ function Audiobook({ match }) {
                 return
             }
             setAudiobook({
-                title: response.data.Title,
-                chapters: response.data.Chapters
+                title: response.data?.bookDetails?.title?.String,
+                author: response.data?.bookDetails?.author?.String,
+                image_url: response.data?.bookDetails?.image_url?.String,
+                chapters: response.data.chapters
             })
         }
         func()
@@ -52,18 +54,18 @@ function Audiobook({ match }) {
                 &&
                 <>
                     <div className="top" >
-                        <div className="bg-img" style={{ background: `url("${audiobook?.image_url?.String}")` }} />
+                        <div className="bg-img" style={{ background: `url("${audiobook?.image_url}")` }} />
                         <div className="cover-art">
                             <img
-                                src={audiobook?.image_url?.String}
+                                src={audiobook?.image_url}
                             />
                         </div>
                         <div className="name-and-author">
                             <h1 className="title">
-                                {audiobook?.title?.String}
+                                {audiobook?.title}
                             </h1>
                             <h3 className="author">
-                                By {audiobook?.author?.String}
+                                By {audiobook?.author}
                             </h3>
                         </div>
                     </div>
@@ -76,7 +78,7 @@ function Audiobook({ match }) {
                                     className="chapter"
                                     onClick={() => updateCurrentAudio(chapter)}
                                 >
-                                    <img src={audiobook.Link} />
+                                    <img src={audiobook?.image_url} />
                                     <h4>{chapter.Title}</h4>
                                 </div>
                             )
