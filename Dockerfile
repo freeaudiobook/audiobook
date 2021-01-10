@@ -12,7 +12,8 @@ WORKDIR /app/
 COPY go.* /app/
 RUN go mod download
 COPY . .
-RUN  go build -o /out/app
+RUN  go build
+COPY --from=UI /app/my-app/build /app/my-app/build
 
 ARG DB_HOST
 ENV DB_HOST=${DB_HOST}
@@ -29,6 +30,7 @@ ENV DB_USER=${DB_USER}
 ARG DB_PASSWORD
 ENV DB_PASSWORD=${DB_PASSWORD}
 
-WORKDIR /app/
+# WORKDIR /out
 EXPOSE 8000
-ENTRYPOINT [ "./audiobook", "-m" ]
+RUN chmod +x ./audiobook
+CMD [ "./audiobook"]

@@ -1,0 +1,7 @@
+.git
+audiobook
+node_modules
+my-app/node_modules
+my-app/build
+*/node_modules
+Dockerfile
