@@ -126,14 +126,15 @@ func newBook(w http.ResponseWriter, r *http.Request) {
 
 func main() {
 	dbHost := os.Getenv("DB_HOST")
+	dbPort := os.Getenv("DB_PORT")
 	dbUser := os.Getenv("DB_USER")
 	dbPassword := os.Getenv("DB_PASSWORD")
 	dbName := os.Getenv("DB_NAME")
 
 	psqlInfo := fmt.Sprintf(
-		"host=%s port=%d user=%s password=%s dbname=%s sslmode=disable",
+		"host=%s port=%d user=%s password=%s dbname=%s sslmode=require",
 		dbHost,
-		5432,
+		dbPort,
 		dbUser,
 		dbPassword,
 		dbName,
