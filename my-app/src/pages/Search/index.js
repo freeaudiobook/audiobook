@@ -1,14 +1,36 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { BsSearch } from 'react-icons/bs';
 
 import Audiobook from '../../components/Audiobook';
 
+import { search } from '../../utils/api'
+
 import './style.css'
 
-function Search({ history }){
+function Search({ history, location }){
     document.title = "Search Results | The Book Hub"
 
-    const audiobooksSearchResults = []
+    const [searchBarValue, setSearchBarValue] = useState("")
+    const [loadedResults, setLoadedResults] = useState(true)
+    const [searchResults, setSearchResults] = useState([])
+
+    const onChangeCallback = (e) => {
+        setSearchBarValue(e.target.value)
+    }
+
+    const onKeyDownCallback = (e) => {
+        if(e.key==="Enter") history.push(`search?name=${searchBarValue}`)
+    }
+
+    useEffect(() => {
+        setLoadedResults(false)
+        const qParamsMap = new URLSearchParams(location.search)
+        const searchParams = {
+            name: qParamsMap.get("name")
+        }
+        // const results =  await search(params)
+        // setLoadedResults(true)
+    }, [location]) 
 
     return (
         <div className="search-page rest-page">
@@ -16,17 +38,19 @@ function Search({ history }){
                 <BsSearch style={{color: "black"}}/>
                 <input 
                     placeholder="Search for Audiobooks, Authors, or Readers"
+                    onChange={onChangeCallback}
+                    onKeyDown={onKeyDownCallback}
                 />
             </div>
             {
-                audiobooksSearchResults.length !== 0
+                searchResults.length !== 0
                 &&
                 <div className="group">
                 <h2 className="heading discover">Audiobooks</h2>
                 <br/>
                 <div className="items">
                     {
-                        audiobooksSearchResults.map(
+                        searchResults.map(
                             audiobook => <Audiobook {...audiobook} history={history} />
                         )
                     }
@@ -35,7 +59,7 @@ function Search({ history }){
             </div>
             } 
             {
-                audiobooksSearchResults.length === 0
+                !loadedResults && searchResults.length === 0
                 &&
                 <div className="no-results-found">
                     <h3>No results found</h3>

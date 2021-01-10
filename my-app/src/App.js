@@ -27,7 +27,8 @@ function App() {
                 <GlobalContext.Provider value={contextValue}>
                   <Route path="/" component={SideMenu} />
                       <Route exact path="/search" component={Search}/>
-                      <Route exact path="/audiobook" component={Audiobook}/>
+                      <Route exact path="/audiobook/" component={Audiobook}/>
+                      <Route exact path="/audiobook/:id" component={Audiobook}/>
                       <Route exact path="/" component={ListingPage}/>
                     <Route path="/" component={Player} />
                 </GlobalContext.Provider>
