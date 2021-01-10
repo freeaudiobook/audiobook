@@ -66,7 +66,7 @@ func main() {
 	}
 
 	writer := csv.NewWriter(file)
-
+	writer.Comma = '|'
 	writer.Write([]string{"title", "image_url", "librivox_url", "genre", "author", "summary", "language", "total_duration"})
 
 	for _, r := range jsonData.Data {
