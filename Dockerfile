@@ -31,4 +31,4 @@ ENV DB_PASSWORD=${DB_PASSWORD}
 
 WORKDIR /app/
 EXPOSE 8000
-ENTRYPOINT [ "./app", "-m" ]
+ENTRYPOINT [ "./audiobook", "-m" ]
