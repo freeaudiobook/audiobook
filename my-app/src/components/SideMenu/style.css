@@ -80,6 +80,11 @@ div[data-is-selected=true]{
   }
   .side-menu{
     border-top: 1px solid rgba(255,255,255,0.5);
+    position: fixed;
+    top: 90vh;
+    height: 10vh;
+    width: 100%;
+    padding: 0px;
   }
 }
 

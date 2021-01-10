@@ -1,4 +1,4 @@
-import React, { useContext, useEffect  } from 'react'
+import React, { useContext, useEffect, useRef  } from 'react'
 import ReactAudioPlayer  from 'react-h5-audio-player'
 
 import { GlobalContext } from '../../contexts'
@@ -11,14 +11,16 @@ import './style.css'
 
 function Player(){
 
+    const playerRef = useRef(null);
+
     const { currentAudio, user } = useContext(GlobalContext)
     const { width, height } = useWindowDimensions()
 
     const storeCurrentSeekTime = async(currentAudio, currentTime) => {
-        const encodedChapterURL = btoa(currentAudio.chapter?.Link)
-        const currentTimeInSeconds = Math.floor(currentTime)
-        console.log(user, encodedChapterURL, currentTimeInSeconds)
-        const response = await updateSeekTime(user, encodedChapterURL, currentTimeInSeconds)
+        // const encodedChapterURL = btoa(currentAudio.chapter?.Link)
+        // const currentTimeInSeconds = Math.floor(currentTime)
+        // console.log(user, encodedChapterURL, currentTimeInSeconds)
+        // const response = await updateSeekTime(user, encodedChapterURL, currentTimeInSeconds)
     }
 
     useEffect(() => {
@@ -29,6 +31,9 @@ function Player(){
             // const encodedChapterURL = btoa(currentAudio.chapter?.Link)
             // const response = await getSeek(user, encodedChapterURL)
             // console.log(response.data)
+            // if(playerRef?.current?.audio?.current){
+            //     playerRef.current.audio.current.currentTime = response.data || 0
+            // }
         }
         func()
     }, [currentAudio, user])
@@ -44,6 +49,7 @@ function Player(){
                     currentAudio.chapter?.Title
                     &&
                     <ReactAudioPlayer 
+                        ref={playerRef}
                         src={currentAudio.chapter?.Link} 
                         autoPlay={false} 
                         listenInterval={3000}

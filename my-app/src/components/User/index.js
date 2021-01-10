@@ -3,6 +3,7 @@ import React, { useContext, useEffect } from 'react'
 import { GlobalContext } from '../../contexts'
 
 import { getCurrentUser } from '../../utils/api'
+import { handlePromise } from '../../utils/promises'
 
 import './style.css'
 
@@ -14,11 +15,15 @@ function User(){
 
     useEffect(() => {
         const func = async() => {
-            // const response = await getCurrentUser()
-            // if(response?.data?.status === 200){
-            //     setUser(response.data)
-            // }
-            setUser("harsh51000@gmail.com")
+            const [response, err] = await handlePromise(getCurrentUser())
+            
+            if(err){
+                console.log(err)
+                return
+            }
+            console.log(response.data)
+            setUser(response.data)
+            // setUser("example@abcd.com")
         }
         func()
     }, [])
