@@ -46,7 +46,7 @@ type Rows struct {
 }
 
 func main() {
-	jsonDataFromFile, err := ioutil.ReadFile("./data/audiobooks.json")
+	jsonDataFromFile, err := ioutil.ReadFile("./data/updateAudiobooks.json")
 
 	if err != nil {
 		fmt.Println(err)
