@@ -13,6 +13,13 @@
   display: flex;
   gap: 20px;
   align-items: center;
+
+  position: fixed;
+  bottom: 0px;
+  height: 88px;
+  width: 100%;
+  
+  border-top: 1px solid rgba(255,255,255,0.5);
 }
 
 .audio-player-wrapper {
@@ -92,25 +99,15 @@
   .rhap_container{
       padding: 0px;
   }
-  .rhap_progress-section{
+  .rhap_progress-section, .rhap_volume-controls, .rhap_additional-controls{
       display: none;
   }
-  .rhap_controls-section{
-      margin-top: none;
-  }
-  .rhap_volume-controls{
-      display: none;
-  }
-  .rhap_additional-controls{
-      display: none;
+ .rhap_controls-section{
+    margin-top: none!important;
   }
   .player{
       grid-template-columns: 80% 20%;
-  }
-  .player{
-    position: fixed;
-    top: 79vh;
-    height: 11vh;
-    width: 100%;
+      bottom: 51px;
+      height: 75px;
   }
 }
