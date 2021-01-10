@@ -22,8 +22,8 @@ type Chapter struct {
 //NewBookWithChapters produces chapter audio links given a chapter level RSS feed link
 func NewBookWithChapters(path string) BookWithChapters {
 	fp := gofeed.NewParser()
+	log.Println("Parsing for chapters: ", path)
 	feed, _ := fp.ParseURL(path)
-
 	chapters := []Chapter{}
 
 	for _, v := range feed.Items {

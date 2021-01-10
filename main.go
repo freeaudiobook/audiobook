@@ -93,7 +93,7 @@ func getBookById(w http.ResponseWriter, r *http.Request) {
 		json.NewEncoder(w).Encode(map[string]string{"message": "unable to find books"})
 	}
 
-	json.NewEncoder(w).Encode(book)
+	json.NewEncoder(w).Encode(FetchAudioChapters(book.LibrivoxUrl.String))
 }
 
 func getSeek(w http.ResponseWriter, r *http.Request) {
