@@ -19,7 +19,7 @@ body{
 .rest-page{
   grid-row: 1 / 2;
   grid-column: 2/3;
-  background: #121212;
+  background: #1c1223;
   padding: 20px;
   color: white;
   box-sizing: border-box;
@@ -57,7 +57,7 @@ body{
 }
 
 .group .item:hover{
-  background: #282828;
+  background: #2d1e38;
   cursor: pointer;
 }
 
