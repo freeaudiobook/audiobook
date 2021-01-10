@@ -38,6 +38,7 @@ type Row struct {
 	Details Details `json:"details"`
 	Tracks  []Track `json:"tracks"`
 	ID      int     `json:"id"`
+	ImgUrl  string  `json:"imgUrl"`
 }
 
 type Rows struct {
@@ -66,12 +67,13 @@ func main() {
 
 	writer := csv.NewWriter(file)
 
-	writer.Write([]string{"title", "librivox_url", "genre", "author", "summary", "language", "total_duration"})
+	writer.Write([]string{"title", "image_url", "librivox_url", "genre", "author", "summary", "language", "total_duration"})
 
 	for _, r := range jsonData.Data {
 		var record []string
 
 		record = append(record, r.Details.Title)
+		record = append(record, r.ImgUrl)
 		record = append(record, r.Details.LibrivoxPageURL)
 		record = append(record, strings.Join(r.Details.Genres, ","))
 		record = append(record, r.Details.Author)
