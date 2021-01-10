@@ -38,6 +38,7 @@ function Player(){
                     />
                 }
             </div>
+            <div className="dummy"></div>
         </div>
     )
 }
