@@ -192,6 +192,15 @@ func main() {
 	router.HandleFunc("/auth/{provider}", func(res http.ResponseWriter, req *http.Request) {
 		gothic.BeginAuthHandler(res, req)
 	}).Methods("GET")
+
+	router.HandleFunc("/currentuser", func(res http.ResponseWriter, req *http.Request) {
+		user, err := gothic.CompleteUserAuth(res, req)
+		if err != nil {
+			fmt.Fprintln(res, err)
+			return
+		}
+		json.NewEncoder(res).Encode(user)
+	}).Methods("GET")
 	router.HandleFunc("/auth/{provider}/callback", func(res http.ResponseWriter, req *http.Request) {
 
 		_, err := gothic.CompleteUserAuth(res, req)
