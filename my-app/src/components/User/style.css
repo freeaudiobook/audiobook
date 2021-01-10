@@ -9,6 +9,7 @@
     font-weight: bold;
     background: black;
     border-radius: 20px;
+    height: fit-content;
 }
 
 .user .login-btn{
