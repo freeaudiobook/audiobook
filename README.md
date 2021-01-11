@@ -9,3 +9,13 @@ Also since language dictates how people think, a phenomenon called linguistic re
 So we decided to build a modern react-based audio player for these audiobooks, in an attempt to get more attention to this. 
 
 http://app.thebookhub.org
+
+
+### Screenshots
+![Curation](https://dev-to-uploads.s3.amazonaws.com/i/wa50r4fh5glcwiho8x0w.png)
+
+![Chapter](https://dev-to-uploads.s3.amazonaws.com/i/xj1qulkjuqmoi5pflper.png)
+
+![Curation on phone](https://dev-to-uploads.s3.amazonaws.com/i/jahtuj1boaizheppc7xm.png)
+
+![Chapters on phone](https://dev-to-uploads.s3.amazonaws.com/i/d6u432k20ctrjrhlz8bd.png)
