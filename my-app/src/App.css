@@ -31,10 +31,6 @@ body{
   overflow-y: scroll;
 }
 
-.main-container[data-show-player=true]{
-  grid-template-rows: calc(-webkit-fill-available - 90px) 90px;
-}
-
 .main-container[data-show-player="false"] .player{
   display: none;
 }
