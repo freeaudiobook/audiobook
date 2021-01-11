@@ -84,7 +84,7 @@ function Search({ history, location }){
                 </div>
             }
             {
-                searchBarValue === "" && keyword === ""
+                keyword === ""
                 &&
                 <div className="no-results-found">
                     <h3>Search for an audiobook</h3>
