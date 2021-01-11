@@ -12,8 +12,9 @@ function Search({ history, location }){
     document.title = "Search Results | The Book Hub"
 
     const [searchBarValue, setSearchBarValue] = useState("")
-    const [loadedResults, setLoadedResults] = useState(true)
+    const [loadedResults, setLoadedResults] = useState(false)
     const [searchResults, setSearchResults] = useState([])
+    const [keyword, setKeyword] = useState("")
 
     const onChangeCallback = (e) => {
         setSearchBarValue(e.target.value)
@@ -23,15 +24,22 @@ function Search({ history, location }){
         if(e.key==="Enter") history.push(`search?keyword=${searchBarValue}`)
     }
 
+    const hasSearchedForSomething = keyword !== ""
+
     useEffect(() => {
-        if(searchBarValue === ""){
+        const qParamsMap = new URLSearchParams(location.search)
+        const keyword = qParamsMap.get("keyword") || ""
+        setKeyword(keyword)
+        if(keyword === ""){
+            setSearchResults([])
+            setLoadedResults(true)
             return
         }
+        setSearchBarValue(keyword)
         const func = async() => {
             setLoadedResults(false)
-            const qParamsMap = new URLSearchParams(location.search)
             const searchParams = {
-                keyword: qParamsMap.get("keyword")
+                keyword: keyword
             }
             const response = await search(searchParams)
             setSearchResults(response.data || [])
@@ -49,6 +57,7 @@ function Search({ history, location }){
                     placeholder="Search by Title or Author"
                     onChange={onChangeCallback}
                     onKeyDown={onKeyDownCallback}
+                    value={searchBarValue}
                 />
             </div>
             {
@@ -75,7 +84,7 @@ function Search({ history, location }){
                 </div>
             }
             {
-                searchBarValue === ""
+                searchBarValue === "" && keyword === ""
                 &&
                 <div className="no-results-found">
                     <h3>Search for an audiobook</h3>
@@ -83,7 +92,7 @@ function Search({ history, location }){
                 </div>
             }
             {
-                searchBarValue !== "" && loadedResults && searchResults.length === 0
+                hasSearchedForSomething && loadedResults && searchResults.length === 0
                 &&
                 <div className="no-results-found">
                     <h3>No results found</h3>
