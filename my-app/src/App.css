@@ -4,6 +4,8 @@ body{
   font-family: 'Roboto', sans-serif;
 }
 
+.login-btn { cursor: pointer; }
+
 .main-container{
   display: grid;
   grid-template-columns: 232px calc(100vw - 232px);
