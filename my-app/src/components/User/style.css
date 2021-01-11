@@ -1,6 +1,6 @@
 .user{
     display: flex;
-    flex-direction: row-reverse;
+    justify-content: flex-end;
 }
 
 .user .user-btn{
@@ -14,4 +14,9 @@
 
 .user .login-btn{
     cursor: s;
+}
+
+.user .logout-btn{
+    cursor: pointer;
+    font-weight: normal;
 }
